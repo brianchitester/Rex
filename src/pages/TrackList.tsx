@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { usePaginatedTracksQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate } from "react-router-dom";
-import Track from "./lib/Track";
+import Track from "../components/lib/Track";
 
 function TrackList() {
   const { tracks, isLoading, isError } = usePaginatedTracksQuery(50);
@@ -25,7 +25,7 @@ function TrackList() {
       <div>
         {tracks.map((track) => (
           <Track
-            onClick={() => navigate(`trackDetails/${track.id}`)}
+            onClick={() => navigate(`/trackDetails/${track.id}`)}
             key={track.id}
             track={track}
           />
@@ -34,10 +34,5 @@ function TrackList() {
     </div>
   );
 }
-
-const StyledTrackListContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 export default TrackList;

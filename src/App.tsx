@@ -4,6 +4,7 @@ import { SpinampProvider } from "@spinamp/spinamp-hooks";
 import Home from "./pages/Home";
 import TrackDetails from "./pages/TrackDetails";
 import Owner from "./pages/Owner";
+import TrackList from "./pages/TrackList";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/trackList" element={<TrackList />} />
           <Route
             path="/trackDetails/:chain/:token/:id"
             element={<TrackDetails />}

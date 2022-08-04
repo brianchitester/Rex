@@ -1,12 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import TrackList from "../components/TrackList";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <StyledHomeContainer>
-      <div>Welcome Home</div>
-      <TrackList />
+      <h1>Welcome Home</h1>
+      <button onClick={() => navigate("/trackList")}>go to track list</button>
     </StyledHomeContainer>
   );
 }

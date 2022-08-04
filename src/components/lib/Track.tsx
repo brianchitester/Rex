@@ -13,10 +13,7 @@ function Track({ onClick, track }: TrackProps) {
         <div>{track.artist.name}</div>
         <div>{track.title}</div>
       </StyledTrackInfo>
-      <audio controls src={track?.lossyAudioUrl}>
-        Your browser does not support the
-        <code>audio</code> element.
-      </audio>
+      <audio controls src={track?.lossyAudioUrl} />
     </StyledTrackContainer>
   );
 }
