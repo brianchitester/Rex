@@ -36,7 +36,12 @@ function TrackDetails() {
         <div>{track?.title}</div>
         <div>{track?.artist.name}</div>
         <div>{track?.description}</div>
-        <img width={150} height={150} src={track?.lossyArtworkUrl} />
+        <img
+          alt={track?.title}
+          width={150}
+          height={150}
+          src={track?.lossyArtworkUrl}
+        />
         <audio controls src={track?.lossyAudioUrl}>
           Your browser does not support the
           <code>audio</code> element.

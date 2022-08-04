@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { usePaginatedTracksQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate } from "react-router-dom";
 import Track from "../components/lib/Track";
