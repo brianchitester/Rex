@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SpinampProvider } from "@spinamp/spinamp-hooks";
 import Home from "./pages/Home";
 import TrackDetails from "./pages/TrackDetails";
+import Owner from "./pages/Owner";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             path="/trackDetails/:chain/:token"
             element={<TrackDetails />}
           />
+          <Route path="/owner/:ownerId" element={<Owner />} />
         </Routes>
       </BrowserRouter>
     </SpinampProvider>

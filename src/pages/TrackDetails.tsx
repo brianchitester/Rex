@@ -1,10 +1,11 @@
 import React from "react";
 import { useTrackNftsOwnersQuery, useTrackQuery } from "@spinamp/spinamp-hooks";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function TrackDetails() {
   const params = useParams();
+  const navigate = useNavigate();
   const trackId = `${params?.chain ?? ""}/${params?.token ?? ""}${
     params.id ? `/${params.id}` : ""
   }`;
@@ -45,7 +46,9 @@ function TrackDetails() {
             <div>Owners</div>
             <ul>
               {filteredOwners.map((owner) => (
-                <li key={owner}>{owner}</li>
+                <li key={owner} onClick={() => navigate(`/owner/${owner}`)}>
+                  {owner}
+                </li>
               ))}
             </ul>
           </>
