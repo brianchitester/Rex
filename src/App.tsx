@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SpinampProvider } from "@spinamp/spinamp-hooks";
+import Home from "./pages/Home";
+import TrackDetails from "./pages/TrackDetails";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SpinampProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/trackDetails/:chain/:token/:id"
+            element={<TrackDetails />}
+          />
+          <Route
+            path="/trackDetails/:chain/:token"
+            element={<TrackDetails />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </SpinampProvider>
   );
 }
 
