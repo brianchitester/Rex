@@ -25,7 +25,7 @@ function Owner() {
 
   return (
     <StyledOwnerContainer>
-      <h1>{`${params?.ownerId}'s collection`}</h1>
+      <OwnerTitle>{`${params?.ownerId?.slice(0, 6)}'s collection`}</OwnerTitle>
       {collection.map((track) => {
         return (
           <Track
@@ -42,6 +42,13 @@ function Owner() {
 const StyledOwnerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: permanent-marker, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+`;
+
+const OwnerTitle = styled.h1`
+  margin: 1em;
 `;
 
 export default Owner;
