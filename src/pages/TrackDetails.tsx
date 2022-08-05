@@ -43,7 +43,7 @@ function TrackDetails() {
       />
       <TrackTitle>{track?.title}</TrackTitle>
       <TrackArtist>{track?.artist.name}</TrackArtist>
-      <TrackDescription>
+      <TrackDescription width={imageSize}>
         {track?.description?.replace(/<[^>]*>?/gm, "")}
       </TrackDescription>
 
@@ -101,8 +101,9 @@ const TrackArtist = styled.h2`
   font-style: normal;
 `;
 
-const TrackDescription = styled.div`
+const TrackDescription = styled.div<{ width: number }>`
   margin: 1em;
+  width: ${(props) => `${props.width}px;`};
 `;
 
 const Owners = styled.div`
