@@ -37,8 +37,8 @@ function App() {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <SpinampProvider>
-          <Nav />
           <HashRouter>
+            <Nav />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/trackList" element={<TrackList />} />
@@ -51,6 +51,7 @@ function App() {
                 element={<TrackDetails />}
               />
               <Route path="/owner/:ownerId" element={<Owner />} />
+              <Route path="/myMusic/:ownerId" element={<Owner />} />
             </Routes>
           </HashRouter>
         </SpinampProvider>
