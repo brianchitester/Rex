@@ -8,7 +8,6 @@ import zora from "../img/zora.png";
 import spinamp from "../img/spinamp.jpg";
 import polygon from "../img/polygon.png";
 import dig from "../img/dig.jpg";
-import useWindowDimensions from "../hooks/useWindowDimensions";
 
 function Home() {
   const navigate = useNavigate();
