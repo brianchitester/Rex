@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { SpinampProvider } from "@spinamp/spinamp-hooks";
 import Home from "./pages/Home";
 import TrackDetails from "./pages/TrackDetails";
@@ -9,7 +9,7 @@ import TrackList from "./pages/TrackList";
 function App() {
   return (
     <SpinampProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/trackList" element={<TrackList />} />
@@ -23,7 +23,7 @@ function App() {
           />
           <Route path="/owner/:ownerId" element={<Owner />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </SpinampProvider>
   );
 }
