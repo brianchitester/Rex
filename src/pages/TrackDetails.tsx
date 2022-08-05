@@ -104,6 +104,7 @@ const TrackArtist = styled.h2`
 const TrackDescription = styled.div<{ width: number }>`
   margin: 1em;
   width: ${(props) => `${props.width}px;`};
+  text-align: center;
 `;
 
 const Owners = styled.div`

@@ -11,6 +11,7 @@ function Track({ onClick, track }: TrackProps) {
     <StyledTrackContainer background={track?.lossyArtworkUrl ?? ""}>
       <StyledTrackInfo onClick={onClick}>
         <div>{track.artist.name}</div>
+        <div>-</div>
         <div>{track.title}</div>
       </StyledTrackInfo>
       <audio controls src={track?.lossyAudioUrl} />
