@@ -35,6 +35,7 @@ const StyledTrackContainer = styled.div<{ background: string }>`
   border: 1px solid black;
   gap: 10px;
   width: 100%;
+  height: 72px;
   padding: 10px;
   align-items: center;
 `;
