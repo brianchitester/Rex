@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
 
 function Nav() {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
+  const location = useLocation();
+
+  // dont render on the homepage
+  if (location.pathname === "/") {
+    return null;
+  }
   return (
     <StyledNavContainer>
       <NavItem onClick={() => navigate("/trackList")}>All tracks</NavItem>
