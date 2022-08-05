@@ -7,7 +7,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 function TrackDetails() {
   const params = useParams();
   const navigate = useNavigate();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const trackId = `${params?.chain ?? ""}/${params?.token ?? ""}${
     params.id ? `/${params.id}` : ""
   }`;
@@ -31,7 +31,7 @@ function TrackDetails() {
 
   const filteredOwners = owners.filter((owner) => !!owner);
 
-  const imageSize = width * 0.6;
+  const imageSize = height < width ? height * 0.6 : width * 0.6;
 
   return (
     <StyledTrackDetailsContainer>
@@ -76,6 +76,7 @@ const StyledTrackDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2em;
 `;
 
 const StyledTrackCover = styled.img`
@@ -88,10 +89,16 @@ const BuyButton = styled.a`
 
 const TrackTitle = styled.h1`
   margin: 0px;
+  font-family: permanent-marker, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 `;
 
 const TrackArtist = styled.h2`
   margin: 0px;
+  font-family: permanent-marker, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 `;
 
 const TrackDescription = styled.div`

@@ -26,6 +26,9 @@ const StyledTrackInfo = styled.div`
   background-color: rgba(255, 255, 255, 0.6);
   font-weight: bold;
   border-radius: 5px;
+  font-family: permanent-marker, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 `;
 
 const StyledTrackContainer = styled.div<{ background: string }>`
