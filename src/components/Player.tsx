@@ -70,8 +70,13 @@ const Controls = () => {
 const CD = () => {
     const [currentTrack, _] = useCurrentTrack();
     const { playing } = useAudioPlayerControls();
+    const { seek } = useAudioPlayerSeek();
 
     const theme = useTheme();
+
+    console.log("seek", seek);
+    console.log("seek2", seek % 360);
+    console.log("seek1000", (seek * 1000) % 360);
 
     return (
         <Box
@@ -81,15 +86,8 @@ const CD = () => {
                 overflow: "hidden",
                 height: 100,
                 width: 100,
-                animation: playing ? "rotate 10s linear infinite" : "none",
-                "@keyframes rotate": {
-                    "0%": {
-                        transform: "rotate(0deg)"
-                    },
-                    "100%": {
-                        transform: "rotate(360deg)"
-                    }
-                }
+                transform: `rotate(${(seek * 20) % 360}deg)`,
+                animation: playing ? "rotate 10s linear infinite" : "none"
             }}
         >
             <img

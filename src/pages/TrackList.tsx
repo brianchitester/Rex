@@ -48,7 +48,6 @@ function TrackList() {
 
     return (
         <div>
-            <TrackListTitle>Track List</TrackListTitle>
             <TrackListContainer
                 ref={ref}
                 onMouseDown={onMouseDown}
@@ -73,13 +72,6 @@ const TrackListContainer = styled.div`
     overflow-x: hidden;
     background: black;
     height: 300px;
-`;
-
-const TrackListTitle = styled.h1`
-    font-family: permanent-marker, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    margin: 1em;
 `;
 
 export default TrackList;
