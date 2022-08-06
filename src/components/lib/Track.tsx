@@ -1,20 +1,33 @@
 import { ITrack } from "@spinamp/spinamp-hooks";
 import React from "react";
 import styled from "styled-components";
+import { useCurrentTrack } from "../../context/CurrentTrackContext";
 
 type TrackProps = {
   onClick: () => void;
   track: ITrack;
 };
 function Track({ onClick, track }: TrackProps) {
+  const [currentTrack, setCurrentTrack] = useCurrentTrack();
+
+  const selectTrack = () => {
+    setCurrentTrack(track);
+  };
+
+  const isPlaying = currentTrack.id === track.id;
+
   return (
-    <StyledTrackContainer background={track?.lossyArtworkUrl ?? ""}>
+    <StyledTrackContainer
+      background={track?.lossyArtworkUrl ?? ""}
+      onClick={selectTrack}
+      isPlaying={isPlaying}
+    >
       <StyledTrackInfo onClick={onClick}>
         <div>{track.artist.name}</div>
         <div>-</div>
         <div>{track.title}</div>
       </StyledTrackInfo>
-      <audio controls src={track?.lossyAudioUrl} />
+      <audio src={track?.lossyAudioUrl} />
     </StyledTrackContainer>
   );
 }
@@ -32,11 +45,15 @@ const StyledTrackInfo = styled.div`
   font-style: normal;
 `;
 
-const StyledTrackContainer = styled.div<{ background: string }>`
+const StyledTrackContainer = styled.div<{
+  background: string;
+  isPlaying: boolean;
+}>`
   display: flex;
   background-image: ${(props) => `url(${props.background})`};
   background-size: cover;
-  border: 1px solid black;
+  border: ${(props) =>
+    props.isPlaying ? "2px solid black" : "1px solid black"};
   gap: 10px;
   width: 100%;
   height: 72px;

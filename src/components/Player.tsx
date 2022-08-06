@@ -1,16 +1,194 @@
-import { styled } from "@mui/material";
+import { Box, IconButton, Slider, styled, useTheme } from "@mui/material";
 import { useCurrentTrack } from "../context/CurrentTrackContext";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import {
+  PlayCircleRounded,
+  PauseCircleRounded,
+  SkipNextRounded,
+  SkipPreviousRounded,
+  ShuffleRounded,
+  ShuffleOnRounded,
+  RepeatRounded,
+  RepeatOnRounded,
+  FavoriteRounded,
+} from "@mui/icons-material";
+import { useState } from "react";
+import { useThrottle } from "@react-hook/throttle";
+import {
+  AudioPlayerProvider,
+  useAudioPlayerControls,
+  useAudioPlayerSeek,
+} from "../context/AudioPlayerContext";
+
+const Seek = () => {
+  const { seek, seekTo, duration } = useAudioPlayerSeek();
+
+  // console.log(position);
+
+  // const [debouncedPercent, _] = useThrottle(percentComplete, 30);
+  // console.log(debouncedPercent);
+
+  return (
+    <>
+      {/* {debouncedPercent} */}
+      {/* {seek} */}
+
+      <Slider
+        size="small"
+        value={seek}
+        min={0}
+        max={duration}
+        onChange={(_, value) => seekTo(value as number)}
+        sx={{
+          height: 4,
+          "& .MuiSlider-thumb": {
+            width: 8,
+            height: 8,
+            transition: "0.3s cubic-bezier(.47,1.64,.41,.8)",
+            "&:before": {
+              boxShadow: "0 2px 12px 0 rgba(0,0,0,0.4)",
+            },
+            "&:hover, &.Mui-focusVisible": {
+              boxShadow: `0px 0px 0px 8px ${"rgb(0 0 0 / 16%)"}`,
+            },
+            "&.Mui-active": {
+              width: 20,
+              height: 20,
+            },
+          },
+          "& .MuiSlider-rail": {
+            opacity: 0.28,
+          },
+        }}
+      />
+    </>
+  );
+};
+
+const Controls = () => {
+  const { playing, togglePlayPause } = useAudioPlayerControls();
+
+  console.log({ playing, togglePlayPause });
+
+  return (
+    <IconButton
+      onClick={() => {
+        console.log(playing);
+        // console.log({ ready, loading, error });
+
+        togglePlayPause();
+      }}
+    >
+      {playing ? (
+        <PauseCircleRounded fontSize="large" />
+      ) : (
+        <PlayCircleRounded fontSize="large" />
+      )}
+    </IconButton>
+  );
+};
+
+const CD = () => {
+  const [currentTrack, _] = useCurrentTrack();
+  const { playing } = useAudioPlayerControls();
+
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        borderRadius: "50%",
+        overflow: "hidden",
+        height: 100,
+        width: 100,
+        animation: playing ? "rotate 10s linear infinite" : "none",
+        "@keyframes rotate": {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          },
+        },
+      }}
+    >
+      <img
+        src={currentTrack?.lossyArtworkUrl}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+        }}
+      />
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          width: "20%",
+          height: "20%",
+          borderRadius: "50%",
+          position: "absolute",
+          top: "40%",
+          left: "40%",
+          zIndex: 1,
+        }}
+      ></Box>
+    </Box>
+  );
+};
 
 export const Player = () => {
   const [currentTrack, _] = useCurrentTrack();
 
+  console.log(currentTrack);
+
   return (
-    <StyledPlayerContainer>
-      Player
-      {JSON.stringify(currentTrack)}
-      <PlayArrowIcon />
-    </StyledPlayerContainer>
+    <AudioPlayerProvider>
+      <Box sx={{ height: "200px" }} />
+      <StyledPlayerContainer>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              margin: 2,
+            }}
+          >
+            <CD />
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+            }}
+          >
+            {`${currentTrack?.title}-${currentTrack?.artist.name}`}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconButton>
+                <SkipPreviousRounded fontSize="medium" />
+              </IconButton>
+              <Controls />
+              <IconButton>
+                <SkipNextRounded fontSize="medium" />
+              </IconButton>
+              <IconButton>
+                <FavoriteRounded fontSize="medium" />
+              </IconButton>
+            </Box>
+            <Box>
+              <Seek />
+            </Box>
+          </Box>
+        </Box>
+      </StyledPlayerContainer>
+    </AudioPlayerProvider>
   );
 };
 
@@ -20,7 +198,7 @@ const StyledPlayerContainer = styled("div")(
   z-index: 1;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: 150px;
   width: 100%;
   background-color: ${theme.palette.background.default};
 `

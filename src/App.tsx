@@ -17,7 +17,7 @@ import { client } from "./apolloClient";
 import { theme } from "./theme";
 import { Player } from "./components/Player";
 import { CurrentTrackProvider } from "./context/CurrentTrackContext";
-import { ThemeProvider } from "@mui/material";
+import { Box, Container, ThemeProvider } from "@mui/material";
 
 // TODO: replace with last played from local storage
 const DEFAULT_TRACK = {
