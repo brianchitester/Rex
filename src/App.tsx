@@ -12,6 +12,8 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import Nav from "./components/Nav";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./apolloClient";
 
 function App() {
   const { chains, provider } = configureChains(
@@ -37,23 +39,25 @@ function App() {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <SpinampProvider>
-          <HashRouter>
-            <Nav />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/trackList" element={<TrackList />} />
-              <Route
-                path="/trackDetails/:chain/:token/:id"
-                element={<TrackDetails />}
-              />
-              <Route
-                path="/trackDetails/:chain/:token"
-                element={<TrackDetails />}
-              />
-              <Route path="/owner/:ownerId" element={<Owner />} />
-              <Route path="/myMusic/:ownerId" element={<Owner />} />
-            </Routes>
-          </HashRouter>
+          <ApolloProvider client={client}>
+            <HashRouter>
+              <Nav />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/trackList" element={<TrackList />} />
+                <Route
+                  path="/trackDetails/:chain/:token/:id"
+                  element={<TrackDetails />}
+                />
+                <Route
+                  path="/trackDetails/:chain/:token"
+                  element={<TrackDetails />}
+                />
+                <Route path="/owner/:ownerId" element={<Owner />} />
+                <Route path="/myMusic/:ownerId" element={<Owner />} />
+              </Routes>
+            </HashRouter>
+          </ApolloProvider>
         </SpinampProvider>
       </RainbowKitProvider>
     </WagmiConfig>

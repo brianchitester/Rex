@@ -3,8 +3,8 @@ import { useTrackNftsOwnersQuery, useTrackQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
+  fetchAllTracks,
   fetchCollectionForAddress,
-  fetchTrackById,
   ITrack,
 } from "@spinamp/spinamp-sdk";
 import useWindowDimensions from "../hooks/useWindowDimensions";
@@ -16,6 +16,7 @@ function TrackDetails() {
   const params = useParams();
   const navigate = useNavigate();
   const { width, height } = useWindowDimensions();
+
   const trackId = `${params?.chain ?? ""}/${params?.token ?? ""}${
     params.id ? `/${params.id}` : ""
   }`;
@@ -41,18 +42,23 @@ function TrackDetails() {
 
   const imageSize = height < width ? height * 0.6 : width * 0.6;
 
-  // madness ahead
+  //madness ahead
   const getRecs = async () => {
     // array of arrays
+    // owner[] tracks[]
     const ownertracks = await Promise.all(
       filteredOwners.map(async (owner) => {
         // this is going to get called a lot for certain tracks
+        // todo: fix this
         const ownerCollection = await fetchCollectionForAddress(owner);
+
         const tracks = ownerCollection.map((track) => track.id);
         return tracks;
       })
     );
 
+    // now that we have the owner [] tracks []
+    // reduce to the most commonly owned tracks
     const recsObj = ownertracks.reduce(
       (accum: { [key: string]: number }, tracks) => {
         tracks.forEach((track) => {
@@ -66,20 +72,34 @@ function TrackDetails() {
       },
       {}
     );
-    const recsArr = await Promise.all(
-      Object.keys(recsObj).map(async (key) => {
-        const track = await fetchTrackById(key);
-        return {
-          track: track ?? ({} as ITrack),
-          count: recsObj[key],
-        };
-      })
-    );
+
+    // get the track info for all those tracks
+    const tracksArr = await fetchAllTracks({
+      filter: {
+        id: {
+          in: Object.keys(recsObj),
+        },
+      },
+    });
+
+    const recsArr = Object.keys(recsObj).map((key) => {
+      return {
+        track:
+          tracksArr.items.find((item) => item.id === key) ?? ({} as ITrack),
+        count: recsObj[key],
+      };
+    });
+
+    // sort for most commonly owned
     recsArr.sort((a, b) => {
       return b.count - a.count;
     });
+
+    // im in danger
     setCalledOnce(true);
-    setRecs(recsArr.slice(1, 5)); // first rec will be the same track
+
+    // slice the first rec since it will be the original track
+    setRecs(recsArr.slice(1, 5));
   };
 
   if (!calledOnce) {
@@ -121,7 +141,7 @@ function TrackDetails() {
           <BuyButton href={track?.websiteUrl}>be the first!</BuyButton>
         </Owners>
       )}
-      {recs.length > 0 && (
+      {recs.length > 0 ? (
         <>
           <div>Similar taste</div>
           {recs.map((rec) => {
@@ -134,6 +154,8 @@ function TrackDetails() {
             );
           })}
         </>
+      ) : (
+        <h1>loading recs</h1>
       )}
     </StyledTrackDetailsContainer>
   );
