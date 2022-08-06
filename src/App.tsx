@@ -15,6 +15,32 @@ import Nav from "./components/Nav";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./apolloClient";
 import Artist from "./pages/Artist";
+import { theme } from "./theme";
+import { Player } from "./components/Player";
+import { CurrentTrackProvider } from "./context/CurrentTrackContext";
+import { Box, Container, ThemeProvider } from "@mui/material";
+
+// TODO: replace with last played from local storage
+const DEFAULT_TRACK = {
+  id: "string",
+  platformInternalId: "string",
+  title: "string",
+  slug: "string",
+  platformId: "string",
+  artistId: "string",
+  artist: {
+    id: "string",
+    name: "string",
+    createdAtTime: "string",
+    slug: "string",
+    profiles: {},
+  },
+  lossyAudioUrl: "string",
+  // lossyArtworkUrl?: "string"
+  // description?: string;
+  // createdAtTime?: string;
+  // websiteUrl?: string;
+};
 
 function App() {
   const { chains, provider } = configureChains(
@@ -41,27 +67,32 @@ function App() {
       <RainbowKitProvider chains={chains}>
         <SpinampProvider>
           <ApolloProvider client={client}>
-            <HashRouter>
-              <Nav />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/trackList" element={<TrackList />} />
-                <Route
-                  path="/trackDetails/:chain/:token/:id"
-                  element={<TrackDetails />}
-                />
-                <Route
-                  path="/trackDetails/:chain/:token"
-                  element={<TrackDetails />}
-                />
-                <Route path="/owner/:ownerId" element={<Owner />} />
-                <Route path="/myMusic/:ownerId" element={<Owner />} />
-                <Route
-                  path="/artist/:chainId/:artistId/:artistName"
-                  element={<Artist />}
-                />
-              </Routes>
-            </HashRouter>
+            <ThemeProvider theme={theme}>
+              <HashRouter>
+                <CurrentTrackProvider defaultTrack={DEFAULT_TRACK}>
+                  <Nav />
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/trackList" element={<TrackList />} />
+                    <Route
+                      path="/trackDetails/:chain/:token/:id"
+                      element={<TrackDetails />}
+                    />
+                    <Route
+                      path="/trackDetails/:chain/:token"
+                      element={<TrackDetails />}
+                    />
+                    <Route path="/owner/:ownerId" element={<Owner />} />
+                    <Route path="/myMusic/:ownerId" element={<Owner />} />
+                    <Route
+                      path="/artist/:chainId/:artistId/:artistName"
+                      element={<Artist />}
+                    />
+                  </Routes>
+                  <Player />
+                </CurrentTrackProvider>
+              </HashRouter>
+            </ThemeProvider>
           </ApolloProvider>
         </SpinampProvider>
       </RainbowKitProvider>
