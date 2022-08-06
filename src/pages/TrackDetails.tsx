@@ -55,6 +55,9 @@ function TrackDetails() {
         Your browser does not support the
         <code>audio</code> element.
       </audio>
+      {track?.websiteUrl && track?.platformId && (
+        <a href={track?.websiteUrl}>view on {track.platformId}</a>
+      )}
       {filteredOwners.length > 0 ? (
         <Owners>
           <h3>Owners</h3>
@@ -77,9 +80,11 @@ function TrackDetails() {
                   {owner}
                 </OwnerLink>
               ))}
-              <OwnerLink onClick={() => setShowMoreOwners(true)}>
-                ... Show {filteredOwners.length - 4} more
-              </OwnerLink>
+              {filteredOwners.length > 5 && (
+                <OwnerLink onClick={() => setShowMoreOwners(true)}>
+                  ... Show {filteredOwners.length - 4} more
+                </OwnerLink>
+              )}
             </>
           )}
         </Owners>
