@@ -16,10 +16,16 @@ function Nav() {
   }
   return (
     <StyledNavContainer>
-      <NavTitle>Rex</NavTitle>
+      <NavTitle onClick={() => navigate("/")}>Rex</NavTitle>
       <Spacer />
-      <NavItem onClick={() => navigate("/")}>Home</NavItem>
-      <NavItem onClick={() => navigate("/trackList")}>All tracks</NavItem>
+      <NavItem onClick={() => navigate("/trackList")}>All</NavItem>
+      <NavItem onClick={() => navigate("/platform/catalog")}>catalog</NavItem>
+      <NavItem onClick={() => navigate("/platform/sound")}>sound</NavItem>
+      <NavItem onClick={() => navigate("/platform/nina")}>nina</NavItem>
+      <NavItem onClick={() => navigate("/platform/noizd")}>noizd</NavItem>
+      <NavItem onClick={() => navigate("/platform/mintsongs")}>
+        mintsongs
+      </NavItem>
       <ArtistSearch />
       {isConnected && (
         <NavItem onClick={() => navigate(`/myMusic/${address}`)}>
@@ -37,6 +43,7 @@ const Spacer = styled.div`
 
 const NavTitle = styled.div`
   font-size: 2em;
+  cursor: pointer;
 `;
 
 const NavItem = styled.div`

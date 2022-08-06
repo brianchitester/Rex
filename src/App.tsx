@@ -19,6 +19,7 @@ import { theme } from "./theme";
 import { Player } from "./components/Player";
 import { CurrentTrackProvider } from "./context/CurrentTrackContext";
 import { ThemeProvider } from "@mui/material";
+import PlatformTracks from "./pages/PlatformTracks";
 
 // TODO: replace with last played from local storage
 const DEFAULT_TRACK = {
@@ -89,6 +90,10 @@ function App() {
                       element={<Artist />}
                     />
                     <Route path="/artist/:artistId" element={<Artist />} />
+                    <Route
+                      path="/platform/:platformId"
+                      element={<PlatformTracks />}
+                    />
                   </Routes>
                   <Player />
                 </CurrentTrackProvider>
