@@ -15,6 +15,8 @@ function Nav() {
   }
   return (
     <StyledNavContainer>
+      <NavTitle>Rex</NavTitle>
+      <Spacer />
       <NavItem onClick={() => navigate("/")}>Home</NavItem>
       <NavItem onClick={() => navigate("/trackList")}>All tracks</NavItem>
       {isConnected && (
@@ -26,6 +28,14 @@ function Nav() {
     </StyledNavContainer>
   );
 }
+
+const Spacer = styled.div`
+  flex-grow: 1;
+`;
+
+const NavTitle = styled.div`
+  font-size: 2em;
+`;
 
 const NavItem = styled.div`
   cursor: pointer;
@@ -41,6 +51,7 @@ const StyledNavContainer = styled.div`
   font-family: permanent-marker, sans-serif;
   font-weight: 400;
   font-style: normal;
+  border-bottom: 1px solid black;
 `;
 
 export default Nav;
