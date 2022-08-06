@@ -13,7 +13,6 @@ const MAX_QUERY_ENTITIES = 1100;
 function AllNfts({ owners }: AllNftsProps) {
   //try slicing owners
   const ownersString = `["${owners.slice(0, MAX_QUERY_ENTITIES).join('","')}"]`;
-  console.log(ownersString);
   const ALL_NFTS_QUERY = gql`
   query AllNftsQuery {
     allNfts(filter: {owner: {in: ${ownersString}}}) {
@@ -116,6 +115,9 @@ function Recs({ recs }: RecsProps) {
                 slug
                 platformId
                 artistId
+                artistByArtistId {
+                  name
+                }
                 lossyAudioUrl
                 lossyArtworkUrl
                 description
@@ -129,7 +131,6 @@ function Recs({ recs }: RecsProps) {
   const { data, loading, error } = useQuery(ALL_TRACKS_QUERY);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   if (loading) {
     return <h2>Loading Recs</h2>;
@@ -144,11 +145,16 @@ function Recs({ recs }: RecsProps) {
   }
 
   const recsArr = Object.keys(recs).map((key) => {
+    const track =
+      data.allProcessedTracks.edges.find((edge: any) => edge.node.id === key) ??
+      ({} as ITrack);
+
+    const trackWithArtist = {
+      ...track.node,
+      artist: { name: track.node.artistByArtistId.name ?? "" },
+    };
     return {
-      track:
-        data.allProcessedTracks.edges.find(
-          (edge: any) => edge.node.id === key
-        ) ?? ({} as ITrack),
+      track: trackWithArtist,
       count: recs[key],
     };
   });
@@ -166,16 +172,15 @@ function Recs({ recs }: RecsProps) {
         .filter(
           // filter out the current track
           (rec) =>
-            rec.track.node.id !==
-            location.pathname.replace("/trackDetails/", "")
+            rec.track.id !== location.pathname.replace("/trackDetails/", "")
         )
         .slice(0, 6)
         .map((rec) => {
           return (
             <Track
-              onClick={() => navigate(`/trackDetails/${rec.track.node.id}`)}
-              key={rec.track.node.id}
-              track={rec.track.node} // some info is missing here
+              onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
+              key={rec.track.id}
+              track={rec.track} // some info is missing here
             />
           );
         })}
