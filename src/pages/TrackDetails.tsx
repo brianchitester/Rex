@@ -2,19 +2,14 @@ import React, { useState } from "react";
 import { useTrackNftsOwnersQuery, useTrackQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import {
-  fetchAllTracks,
-  fetchCollectionForAddress,
-  ITrack,
-} from "@spinamp/spinamp-sdk";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import Track from "../components/lib/Track";
+import AllNfts from "../components/Recs";
 
 function TrackDetails() {
-  const [recs, setRecs] = useState<{ track: ITrack; count: number }[]>([]);
-  const [calledOnce, setCalledOnce] = useState(false);
+  const [showMoreOwners, setShowMoreOwners] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+  // this might be dumb, causing a lot of rerenders
   const { width, height } = useWindowDimensions();
 
   const trackId = `${params?.chain ?? ""}/${params?.token ?? ""}${
@@ -42,70 +37,6 @@ function TrackDetails() {
 
   const imageSize = height < width ? height * 0.6 : width * 0.6;
 
-  //madness ahead
-  const getRecs = async () => {
-    // array of arrays
-    // owner[] tracks[]
-    const ownertracks = await Promise.all(
-      filteredOwners.map(async (owner) => {
-        // this is going to get called a lot for certain tracks
-        // todo: fix this
-        const ownerCollection = await fetchCollectionForAddress(owner);
-
-        const tracks = ownerCollection.map((track) => track.id);
-        return tracks;
-      })
-    );
-
-    // now that we have the owner [] tracks []
-    // reduce to the most commonly owned tracks
-    const recsObj = ownertracks.reduce(
-      (accum: { [key: string]: number }, tracks) => {
-        tracks.forEach((track) => {
-          if (!accum[track]) {
-            accum[track] = 1;
-          } else {
-            accum[track] = accum[track] + 1;
-          }
-        });
-        return accum;
-      },
-      {}
-    );
-
-    // get the track info for all those tracks
-    const tracksArr = await fetchAllTracks({
-      filter: {
-        id: {
-          in: Object.keys(recsObj),
-        },
-      },
-    });
-
-    const recsArr = Object.keys(recsObj).map((key) => {
-      return {
-        track:
-          tracksArr.items.find((item) => item.id === key) ?? ({} as ITrack),
-        count: recsObj[key],
-      };
-    });
-
-    // sort for most commonly owned
-    recsArr.sort((a, b) => {
-      return b.count - a.count;
-    });
-
-    // im in danger
-    setCalledOnce(true);
-
-    // slice the first rec since it will be the original track
-    setRecs(recsArr.slice(1, 5));
-  };
-
-  if (!calledOnce) {
-    getRecs();
-  }
-
   return (
     <StyledTrackDetailsContainer>
       <StyledTrackCover
@@ -127,11 +58,30 @@ function TrackDetails() {
       {filteredOwners.length > 0 ? (
         <Owners>
           <h3>Owners</h3>
-          {filteredOwners.map((owner) => (
-            <OwnerLink key={owner} onClick={() => navigate(`/owner/${owner}`)}>
-              {owner}
-            </OwnerLink>
-          ))}
+          {showMoreOwners ? (
+            filteredOwners.map((owner) => (
+              <OwnerLink
+                key={owner}
+                onClick={() => navigate(`/owner/${owner}`)}
+              >
+                {owner}
+              </OwnerLink>
+            ))
+          ) : (
+            <>
+              {filteredOwners.slice(0, 5).map((owner) => (
+                <OwnerLink
+                  key={owner}
+                  onClick={() => navigate(`/owner/${owner}`)}
+                >
+                  {owner}
+                </OwnerLink>
+              ))}
+              <OwnerLink onClick={() => setShowMoreOwners(true)}>
+                ... Show {filteredOwners.length - 4} more
+              </OwnerLink>
+            </>
+          )}
         </Owners>
       ) : track?.platformId === "nina" ? (
         <Owners>{track.platformId} support coming soon!</Owners>
@@ -141,22 +91,7 @@ function TrackDetails() {
           <BuyButton href={track?.websiteUrl}>be the first!</BuyButton>
         </Owners>
       )}
-      {recs.length > 0 ? (
-        <>
-          <div>Similar taste</div>
-          {recs.map((rec) => {
-            return (
-              <Track
-                onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
-                key={rec.track.id}
-                track={rec.track}
-              />
-            );
-          })}
-        </>
-      ) : (
-        <h1>loading recs</h1>
-      )}
+      {filteredOwners.length > 0 && <AllNfts owners={filteredOwners} />}
     </StyledTrackDetailsContainer>
   );
 }

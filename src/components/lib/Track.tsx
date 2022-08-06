@@ -10,7 +10,7 @@ function Track({ onClick, track }: TrackProps) {
   return (
     <StyledTrackContainer background={track?.lossyArtworkUrl ?? ""}>
       <StyledTrackInfo onClick={onClick}>
-        <div>{track.artist.name}</div>
+        <div>{track?.artist?.name}</div>
         <div>-</div>
         <div>{track.title}</div>
       </StyledTrackInfo>
