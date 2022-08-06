@@ -61,6 +61,11 @@ function TrackDetails() {
       {filteredOwners.length > 0 ? (
         <Owners>
           <h3>Owners</h3>
+          {!!showMoreOwners && (
+            <OwnerLink onClick={() => setShowMoreOwners(false)}>
+              ... Show less
+            </OwnerLink>
+          )}
           {showMoreOwners ? (
             filteredOwners.map((owner) => (
               <OwnerLink
