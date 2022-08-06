@@ -18,7 +18,7 @@ import Artist from "./pages/Artist";
 import { theme } from "./theme";
 import { Player } from "./components/Player";
 import { CurrentTrackProvider } from "./context/CurrentTrackContext";
-import { Box, Container, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 
 // TODO: replace with last played from local storage
 const DEFAULT_TRACK = {

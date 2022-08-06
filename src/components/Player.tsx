@@ -5,10 +5,6 @@ import {
   PauseCircleRounded,
   SkipNextRounded,
   SkipPreviousRounded,
-  ShuffleRounded,
-  ShuffleOnRounded,
-  RepeatRounded,
-  RepeatOnRounded,
   FavoriteRounded,
 } from "@mui/icons-material";
 import {
@@ -93,6 +89,7 @@ const CD = () => {
       }}
     >
       <img
+        alt="current track"
         src={currentTrack?.lossyArtworkUrl}
         style={{
           objectFit: "cover",
@@ -117,6 +114,7 @@ const CD = () => {
 };
 
 export const Player = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentTrack, _] = useCurrentTrack();
   const location = useLocation();
 
