@@ -85,9 +85,10 @@ function App() {
                     <Route path="/owner/:ownerId" element={<Owner />} />
                     <Route path="/myMusic/:ownerId" element={<Owner />} />
                     <Route
-                      path="/artist/:chainId/:artistId/:artistName"
+                      path="/artist/:chainId/:artistId"
                       element={<Artist />}
                     />
+                    <Route path="/artist/:artistId" element={<Artist />} />
                   </Routes>
                   <Player />
                 </CurrentTrackProvider>

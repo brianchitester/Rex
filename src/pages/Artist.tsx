@@ -7,7 +7,7 @@ import Track from "../components/lib/Track";
 function Artist() {
   const params = useParams();
   const navigate = useNavigate();
-  const artist = `${params?.chainId ?? ""}/${params?.artistId ?? ""}`;
+  const artist = `${params?.chainId + "/" ?? ""}${params?.artistId ?? ""}`;
   const { tracks, isLoading, isError } = useAllTracksQuery({
     filter: {
       artistId: { in: [artist] },
@@ -28,7 +28,7 @@ function Artist() {
 
   return (
     <StyledOwnerContainer>
-      <OwnerTitle>{`${params?.artistName}'s tracks`}</OwnerTitle>
+      <OwnerTitle>{`${tracks[0].artist.name}'s tracks`}</OwnerTitle>
       {tracks.map((track) => {
         return (
           <Track

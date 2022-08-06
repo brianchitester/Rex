@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
+import ArtistSearch from "./ArtistSearch";
 
 function Nav() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function Nav() {
       <Spacer />
       <NavItem onClick={() => navigate("/")}>Home</NavItem>
       <NavItem onClick={() => navigate("/trackList")}>All tracks</NavItem>
+      <ArtistSearch />
       {isConnected && (
         <NavItem onClick={() => navigate(`/myMusic/${address}`)}>
           My music

@@ -46,11 +46,7 @@ function TrackDetails() {
         src={track?.lossyArtworkUrl}
       />
       <TrackTitle>{track?.title}</TrackTitle>
-      <TrackArtist
-        onClick={() =>
-          navigate(`/artist/${track?.artist.id}/${track?.artist.name}`)
-        }
-      >
+      <TrackArtist onClick={() => navigate(`/artist/${track?.artist.id}`)}>
         {track?.artist.name}
       </TrackArtist>
       <TrackDescription width={imageSize}>
