@@ -14,7 +14,7 @@ function Home() {
   const navigate = useNavigate();
   return (
     <StyledHomeContainer>
-      <Rex>Rex</Rex>
+      <Rex>🦖🎵 Rex 🎵🦖</Rex>
       <div>A whole new way to find music you love on the blockchain.</div>
       <div>
         Get new music recommendations based on what owners and curators are
