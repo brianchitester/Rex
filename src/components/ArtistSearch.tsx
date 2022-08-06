@@ -35,8 +35,10 @@ function ArtistSearch() {
         autoComplete
         disablePortal
         options={artistOptions}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Artist" />}
+        sx={{ width: 200 }}
+        renderInput={(params) => (
+          <TextField {...params} label="Artist search" />
+        )}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             console.log(e.target.getAttribute("value"));

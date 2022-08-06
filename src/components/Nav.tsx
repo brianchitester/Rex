@@ -60,7 +60,6 @@ function Nav() {
       >
         mintsongs
       </NavItem>
-      <ArtistSearch />
       {isConnected && (
         <NavItem
           location={location.pathname}
@@ -70,7 +69,8 @@ function Nav() {
           My music
         </NavItem>
       )}
-      <ConnectButton />
+      <ArtistSearch />
+      <ConnectButton chainStatus="none" />
     </StyledNavContainer>
   );
 }
