@@ -46,7 +46,13 @@ function TrackDetails() {
         src={track?.lossyArtworkUrl}
       />
       <TrackTitle>{track?.title}</TrackTitle>
-      <TrackArtist>{track?.artist.name}</TrackArtist>
+      <TrackArtist
+        onClick={() =>
+          navigate(`/artist/${track?.artist.id}/${track?.artist.name}`)
+        }
+      >
+        {track?.artist.name}
+      </TrackArtist>
       <TrackDescription width={imageSize}>
         {track?.description?.replace(/<[^>]*>?/gm, "")}
       </TrackDescription>
@@ -133,6 +139,7 @@ const TrackArtist = styled.h2`
   font-family: permanent-marker, sans-serif;
   font-weight: 400;
   font-style: normal;
+  cursor: pointer;
 `;
 
 const TrackDescription = styled.div<{ width: number }>`

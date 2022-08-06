@@ -14,6 +14,7 @@ import { publicProvider } from "wagmi/providers/public";
 import Nav from "./components/Nav";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./apolloClient";
+import Artist from "./pages/Artist";
 
 function App() {
   const { chains, provider } = configureChains(
@@ -55,6 +56,10 @@ function App() {
                 />
                 <Route path="/owner/:ownerId" element={<Owner />} />
                 <Route path="/myMusic/:ownerId" element={<Owner />} />
+                <Route
+                  path="/artist/:chainId/:artistId/:artistName"
+                  element={<Artist />}
+                />
               </Routes>
             </HashRouter>
           </ApolloProvider>
