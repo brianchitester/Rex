@@ -18,7 +18,7 @@ function Artist() {
     return <p>Loading!</p>;
   }
 
-  if (isError) {
+  if (isError || tracks.length === 0) {
     return (
       <div>
         <p>Ups! Something went wrong</p>
