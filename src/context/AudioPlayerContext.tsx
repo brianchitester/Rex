@@ -53,6 +53,7 @@ type AudioPlayerProviderProps = {
 export const AudioPlayerProvider = ({ children }: AudioPlayerProviderProps) => {
   const [playing, setPlaying] = useState(false);
   const [seek, setSeek] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentTrack, _] = useCurrentTrack();
   const [duration, setDuration] = useState(0);
 

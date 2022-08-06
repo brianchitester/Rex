@@ -1,14 +1,14 @@
 import { Box, IconButton, Slider, styled, useTheme } from "@mui/material";
 import { useCurrentTrack } from "../context/CurrentTrackContext";
 import {
-    PlayCircleRounded,
-    PauseCircleRounded,
-    SkipNextRounded,
-    SkipPreviousRounded,
     ShuffleRounded,
     ShuffleOnRounded,
     RepeatRounded,
     RepeatOnRounded,
+    PlayCircleRounded,
+    PauseCircleRounded,
+    SkipNextRounded,
+    SkipPreviousRounded,
     FavoriteRounded
 } from "@mui/icons-material";
 import {
