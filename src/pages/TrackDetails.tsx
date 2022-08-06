@@ -112,7 +112,7 @@ const StyledTrackDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 200px;
 `;
 
 const StyledTrackCover = styled.img`
