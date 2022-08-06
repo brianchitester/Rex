@@ -15,6 +15,7 @@ function Nav() {
   }
   return (
     <StyledNavContainer>
+      <NavItem onClick={() => navigate("/")}>Home</NavItem>
       <NavItem onClick={() => navigate("/trackList")}>All tracks</NavItem>
       {isConnected && (
         <NavItem onClick={() => navigate(`/myMusic/${address}`)}>

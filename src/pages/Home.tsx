@@ -8,12 +8,13 @@ import zora from "../img/zora.png";
 import spinamp from "../img/spinamp.jpg";
 import polygon from "../img/polygon.png";
 import dig from "../img/dig.jpg";
+import tapes from "../img/tapes.jpg";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <StyledHomeContainer>
-      <h1>AwesomeProjectName</h1>
+      <Rex>Rex</Rex>
       <div>A whole new way to find music you love on the blockchain.</div>
       <div>
         Get new music recommendations based on what owners and curators are
@@ -29,8 +30,8 @@ function Home() {
           <PhotoWithCaption>
             <Photo alt={"Brian C"} src={brian} />
             <Name>Brian C</Name>
-            <div>aka</div>
-            <div>Corporation Plaza</div>
+            <SubName>aka</SubName>
+            <SubName>Corporation Plaza</SubName>
           </PhotoWithCaption>
           <PhotoWithCaption>
             <Photo alt={"Christina"} src={christina} />
@@ -44,6 +45,7 @@ function Home() {
           </PhotoWithCaption>
         </Photos>
       </Team>
+      <img alt="tapes" src={tapes} />
       <Support>
         <h1>Built for the Metabolism hackathon</h1>
         <h2>with support from</h2>
@@ -62,6 +64,11 @@ function Home() {
     </StyledHomeContainer>
   );
 }
+
+const Rex = styled.h1`
+  font-size: 8em;
+  margin-bottom: 0px;
+`;
 
 const Supporter = styled.img`
   margin-bottom: 5em;
@@ -114,7 +121,7 @@ const Team = styled.div`
 
 const StartButton = styled.div`
   font-size: 5em;
-  margin: 1em;
+  margin: 0.5em;
   cursor: pointer;
 `;
 
