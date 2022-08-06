@@ -18,17 +18,55 @@ function Nav() {
     <StyledNavContainer>
       <NavTitle onClick={() => navigate("/")}>Rex</NavTitle>
       <Spacer />
-      <NavItem onClick={() => navigate("/trackList")}>All</NavItem>
-      <NavItem onClick={() => navigate("/platform/catalog")}>catalog</NavItem>
-      <NavItem onClick={() => navigate("/platform/sound")}>sound</NavItem>
-      <NavItem onClick={() => navigate("/platform/nina")}>nina</NavItem>
-      <NavItem onClick={() => navigate("/platform/noizd")}>noizd</NavItem>
-      <NavItem onClick={() => navigate("/platform/mintsongs")}>
+      <NavItem
+        location={location.pathname}
+        path="/trackList"
+        onClick={() => navigate("/trackList")}
+      >
+        All
+      </NavItem>
+      <NavItem
+        location={location.pathname}
+        path="/platform/catalog"
+        onClick={() => navigate("/platform/catalog")}
+      >
+        catalog
+      </NavItem>
+      <NavItem
+        location={location.pathname}
+        path="/platform/sound"
+        onClick={() => navigate("/platform/sound")}
+      >
+        sound
+      </NavItem>
+      <NavItem
+        location={location.pathname}
+        path="/platform/nina"
+        onClick={() => navigate("/platform/nina")}
+      >
+        nina
+      </NavItem>
+      <NavItem
+        location={location.pathname}
+        path="/platform/noizd"
+        onClick={() => navigate("/platform/noizd")}
+      >
+        noizd
+      </NavItem>
+      <NavItem
+        location={location.pathname}
+        path="/platform/mintsongs"
+        onClick={() => navigate("/platform/mintsongs")}
+      >
         mintsongs
       </NavItem>
       <ArtistSearch />
       {isConnected && (
-        <NavItem onClick={() => navigate(`/myMusic/${address}`)}>
+        <NavItem
+          location={location.pathname}
+          path="/myMusic"
+          onClick={() => navigate(`/myMusic/${address}`)}
+        >
           My music
         </NavItem>
       )}
@@ -46,8 +84,10 @@ const NavTitle = styled.div`
   cursor: pointer;
 `;
 
-const NavItem = styled.div`
+const NavItem = styled.div<{ path: string; location: string }>`
   cursor: pointer;
+  text-decoration: ${(props) =>
+    props.location.includes(props.path) ? "underline" : ""};
 `;
 
 const StyledNavContainer = styled.div`
