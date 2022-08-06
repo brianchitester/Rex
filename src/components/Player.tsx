@@ -64,6 +64,7 @@ const Controls = () => {
 };
 
 const CD = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentTrack, _] = useCurrentTrack();
   const { playing } = useAudioPlayerControls();
 
