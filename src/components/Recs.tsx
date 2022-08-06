@@ -164,8 +164,6 @@ function Recs({ recs }: RecsProps) {
     return b.count - a.count;
   });
 
-  console.log(recsArr);
-
   return (
     <div>
       {recsArr

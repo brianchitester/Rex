@@ -34,7 +34,8 @@ const StyledTrackInfo = styled.div`
 
 const StyledTrackContainer = styled.div<{ background: string }>`
   display: flex;
-  background-image: ${(props) => `url(${props.background})`};
+  background-image: ${(props) =>
+    `url(${props.background.replace("(", `\\(`).replace(")", "\\)")})`};
   background-size: cover;
   border: 1px solid black;
   gap: 10px;
