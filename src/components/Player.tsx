@@ -11,73 +11,53 @@ import {
   RepeatOnRounded,
   FavoriteRounded,
 } from "@mui/icons-material";
-import { useState } from "react";
-import { useThrottle } from "@react-hook/throttle";
 import {
   AudioPlayerProvider,
   useAudioPlayerControls,
   useAudioPlayerSeek,
 } from "../context/AudioPlayerContext";
+import { useLocation } from "react-router-dom";
 
 const Seek = () => {
   const { seek, seekTo, duration } = useAudioPlayerSeek();
 
-  // console.log(position);
-
-  // const [debouncedPercent, _] = useThrottle(percentComplete, 30);
-  // console.log(debouncedPercent);
-
   return (
-    <>
-      {/* {debouncedPercent} */}
-      {/* {seek} */}
-
-      <Slider
-        size="small"
-        value={seek}
-        min={0}
-        max={duration}
-        onChange={(_, value) => seekTo(value as number)}
-        sx={{
-          height: 4,
-          "& .MuiSlider-thumb": {
-            width: 8,
-            height: 8,
-            transition: "0.3s cubic-bezier(.47,1.64,.41,.8)",
-            "&:before": {
-              boxShadow: "0 2px 12px 0 rgba(0,0,0,0.4)",
-            },
-            "&:hover, &.Mui-focusVisible": {
-              boxShadow: `0px 0px 0px 8px ${"rgb(0 0 0 / 16%)"}`,
-            },
-            "&.Mui-active": {
-              width: 20,
-              height: 20,
-            },
+    <Slider
+      size="small"
+      value={seek}
+      min={0}
+      max={duration}
+      onChange={(_, value) => seekTo(value as number)}
+      sx={{
+        height: 4,
+        "& .MuiSlider-thumb": {
+          width: 8,
+          height: 8,
+          transition: "0.3s cubic-bezier(.47,1.64,.41,.8)",
+          "&:before": {
+            boxShadow: "0 2px 12px 0 rgba(0,0,0,0.4)",
           },
-          "& .MuiSlider-rail": {
-            opacity: 0.28,
+          "&:hover, &.Mui-focusVisible": {
+            boxShadow: `0px 0px 0px 8px ${"rgb(0 0 0 / 16%)"}`,
           },
-        }}
-      />
-    </>
+          "&.Mui-active": {
+            width: 20,
+            height: 20,
+          },
+        },
+        "& .MuiSlider-rail": {
+          opacity: 0.28,
+        },
+      }}
+    />
   );
 };
 
 const Controls = () => {
   const { playing, togglePlayPause } = useAudioPlayerControls();
 
-  console.log({ playing, togglePlayPause });
-
   return (
-    <IconButton
-      onClick={() => {
-        console.log(playing);
-        // console.log({ ready, loading, error });
-
-        togglePlayPause();
-      }}
-    >
+    <IconButton onClick={togglePlayPause}>
       {playing ? (
         <PauseCircleRounded fontSize="large" />
       ) : (
@@ -138,8 +118,12 @@ const CD = () => {
 
 export const Player = () => {
   const [currentTrack, _] = useCurrentTrack();
+  const location = useLocation();
 
-  console.log(currentTrack);
+  // dont render on the homepage (or if not set TODO)
+  if (location.pathname === "/" || currentTrack.title === "string") {
+    return null;
+  }
 
   return (
     <AudioPlayerProvider>
