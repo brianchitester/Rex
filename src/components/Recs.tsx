@@ -7,8 +7,13 @@ type AllNftsProps = {
   owners: string[];
 };
 
+// HACK: queries break if we pass too many ids to filter by
+const MAX_QUERY_ENTITIES = 1100;
+
 function AllNfts({ owners }: AllNftsProps) {
-  const ownersString = `["${owners.join('","')}"]`;
+  //try slicing owners
+  const ownersString = `["${owners.slice(0, MAX_QUERY_ENTITIES).join('","')}"]`;
+  console.log(ownersString);
   const ALL_NFTS_QUERY = gql`
   query AllNftsQuery {
     allNfts(filter: {owner: {in: ${ownersString}}}) {
@@ -47,7 +52,7 @@ type RecTracksProps = {
 
 function RecTracks({ ids }: RecTracksProps) {
   // owners can have multiple of the same track...
-  const idsString = `["${ids.join('","')}"]`;
+  const idsString = `["${ids.slice(0, MAX_QUERY_ENTITIES).join('","')}"]`;
   const ALL_NFTS_QUERY = gql`
     query AllNftsProcessedTracks {
         allNftsProcessedTracks(filter: {nftId: {in: ${idsString}}}) {
