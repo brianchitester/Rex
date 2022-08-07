@@ -9,6 +9,7 @@ import spinamp from "../img/spinamp.jpg";
 import polygon from "../img/polygon.png";
 import dig from "../img/dig.jpg";
 import tapes from "../img/tapes.jpg";
+import ethglobal from "../img/ethglobal.png";
 import { phone, tablet } from "../constants/mediaSize";
 
 function Home() {
@@ -53,6 +54,9 @@ function Home() {
         <SupportH1>Built for the Metabolism hackathon</SupportH1>
         <SupportH2>with support from</SupportH2>
         <Supporters>
+          <a href="https://ethglobal.com/">
+            <Supporter alt="ethglobal" src={ethglobal} />
+          </a>
           <a href="https://zora.co/">
             <Supporter alt="zora" src={zora} />
           </a>
