@@ -16,7 +16,7 @@ function Nav() {
   }
   return (
     <StyledNavContainer>
-      <NavTitle onClick={() => navigate("/")}>Rex</NavTitle>
+      <NavTitle onClick={() => navigate("/")}>Rex🦖🎵</NavTitle>
       <Spacer />
       <NavItem
         location={location.pathname}
@@ -81,6 +81,7 @@ const Spacer = styled.div`
 
 const NavTitle = styled.div`
   font-size: 2em;
+  flex-shrink: 0;
   cursor: pointer;
 `;
 
