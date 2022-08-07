@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTrackNftsOwnersQuery, useTrackQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import AllNfts from "../components/Recs";
 import { useNFT as useZoraNFT } from "@zoralabs/nft-hooks";
+import { useCurrentTrack } from "../context/CurrentTrackContext";
 
 function TrackDetails() {
   const [showMoreOwners, setShowMoreOwners] = useState(false);
@@ -12,6 +13,8 @@ function TrackDetails() {
   const navigate = useNavigate();
   // this might be dumb, causing a lot of rerenders
   const { width, height } = useWindowDimensions();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [currentTrack, setCurrentTrack] = useCurrentTrack();
 
   const trackId = `${params?.chain ?? ""}/${params?.token ?? ""}${
     params.id ? `/${params.id}` : ""
@@ -31,6 +34,12 @@ function TrackDetails() {
     zoraPrice = zoraData.markets[0].amount?.amount.value;
     zoraPriceSymbol = zoraData.markets[0].amount?.symbol;
   }
+
+  useEffect(() => {
+    if (track) {
+      setCurrentTrack(track);
+    }
+  }, [track, setCurrentTrack]);
 
   if (isLoading || isOwnerLoading) {
     return <p>Loading!</p>;
