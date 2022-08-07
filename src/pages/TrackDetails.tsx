@@ -74,7 +74,18 @@ function TrackDetails() {
       </TrackDescription>
 
       {track?.websiteUrl && track?.platformId && (
-        <a href={track?.websiteUrl}>view on {track.platformId}</a>
+        <a href={track?.websiteUrl}>
+          view on{" "}
+          {track.platformId
+            .replace(
+              "0x8427e46826a520b1264b55f31fcb5ddfdc31e349",
+              "chaos.build"
+            )
+            .replace(
+              "0x719C6d392fc659f4fe9b0576cBC46E18939687a7",
+              "danielallan.xyz"
+            )}
+        </a>
       )}
 
       <TrackTitle>
