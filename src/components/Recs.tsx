@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { ITrack } from "@spinamp/spinamp-sdk";
 import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import Track from "./lib/Track";
 
 type AllNftsProps = {
@@ -29,7 +30,7 @@ function AllNfts({ owners }: AllNftsProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -66,7 +67,7 @@ function RecTracks({ ids }: RecTracksProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -133,7 +134,7 @@ function Recs({ recs }: RecsProps) {
   const location = useLocation();
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -144,18 +145,79 @@ function Recs({ recs }: RecsProps) {
     );
   }
 
-  const recsArr = Object.keys(recs).map((key) => {
+  return (
+    <Final
+      processedTracks={data.allProcessedTracks.edges.map(
+        (edge: any) => edge.node
+      )}
+      recsCounts={recs}
+    />
+  );
+}
+
+type FinalProps = {
+  processedTracks: { [key: string]: any };
+  recsCounts: any;
+};
+
+function Final({ processedTracks, recsCounts }: FinalProps) {
+  const idsString = `["${processedTracks
+    .map((rec: any) => rec.id)
+    .join('","')}"]`;
+  const ALL_TRACKS_QUERY = gql`
+    query MyQuery {
+      allProcessedTracks (
+        filter: {id: {in: ${idsString}}}
+      ) {
+        nodes {
+          nftsProcessedTracksByProcessedTrackId {
+            totalCount
+          }
+          id
+        }
+      }
+    }
+  `;
+
+  const { data, loading, error } = useQuery(ALL_TRACKS_QUERY);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (loading) {
+    return <h2>Loading Rex</h2>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>Ups! Something went wrong</p>
+      </div>
+    );
+  }
+
+  const recsArr = Object.keys(recsCounts).map((key) => {
     const track =
-      data.allProcessedTracks.edges.find((edge: any) => edge.node.id === key) ??
-      ({} as ITrack);
+      processedTracks.find((edge: any) => edge.id === key) ?? ({} as ITrack);
 
     const trackWithArtist = {
-      ...track.node,
-      artist: { name: track.node.artistByArtistId.name ?? "" },
+      ...track,
+      artist: { name: track.artistByArtistId.name ?? "" },
     };
+    const totalSupply =
+      data.allProcessedTracks.nodes.find((node: any) => node.id === key)
+        .nftsProcessedTracksByProcessedTrackId.totalCount ?? 1;
     return {
+      totalSupply,
       track: trackWithArtist,
-      count: recs[key],
+      count: recsCounts[key],
+    };
+  });
+
+  const normalizedRecs = recsArr.map((rec) => {
+    return {
+      totalSupply: rec.totalSupply,
+      track: rec.track,
+      count: rec.count / rec.totalSupply,
     };
   });
 
@@ -164,26 +226,75 @@ function Recs({ recs }: RecsProps) {
     return b.count - a.count;
   });
 
+  normalizedRecs.sort((a, b) => {
+    return b.count - a.count;
+  });
+
   return (
-    <div>
-      {recsArr
-        .filter(
-          // filter out the current track
-          (rec) =>
-            rec.track.id !== location.pathname.replace("/trackDetails/", "")
-        )
-        .slice(0, 12)
-        .map((rec) => {
-          return (
-            <Track
-              onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
-              key={rec.track.id}
-              track={rec.track} // some info is missing here
-            />
-          );
-        })}
-    </div>
+    <RexContainer>
+      {normalizedRecs.length > 1 && (
+        <RexCol>
+          <h3>Owner Rex Normalized</h3>
+          <div>
+            {normalizedRecs
+              .filter(
+                // filter out the current track
+                (rec) =>
+                  rec.track.id !==
+                  location.pathname.replace("/trackDetails/", "")
+              )
+              .slice(0, 10)
+              .map((rec) => {
+                return (
+                  <Track
+                    onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
+                    key={rec.track.id}
+                    track={rec.track} // some info is missing here
+                  />
+                );
+              })}
+          </div>
+        </RexCol>
+      )}
+      {recsArr.length > 1 && (
+        <RexCol>
+          <h3>Owner Rex Raw</h3>
+          <div>
+            {recsArr
+              .filter(
+                // filter out the current track
+                (rec) =>
+                  rec.track.id !==
+                  location.pathname.replace("/trackDetails/", "")
+              )
+              .slice(0, 10)
+              .map((rec) => {
+                return (
+                  <Track
+                    onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
+                    key={rec.track.id}
+                    track={rec.track} // some info is missing here
+                  />
+                );
+              })}
+          </div>
+        </RexCol>
+      )}
+    </RexContainer>
   );
 }
+
+const RexContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+`;
+
+const RexCol = styled.div`
+  width: 30vw;
+  min-width: 500px;
+`;
 
 export default AllNfts;

@@ -142,7 +142,6 @@ function TrackDetails() {
 
       {filteredOwners.length > 0 && (
         <div>
-          <h3>Owner Rex</h3>
           <AllNfts owners={filteredOwners} />
         </div>
       )}
