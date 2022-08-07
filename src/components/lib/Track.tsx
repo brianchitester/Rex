@@ -61,7 +61,7 @@ const StyledTrackContainer = styled.div<{
   justify-content: center;
   background-image: ${(props) =>
     `url(${props.background.replace("(", `\\(`).replace(")", "\\)")})`};
-  background-color: gray;
+  background-color: #92929267;
   background-size: cover;
   border: ${(props) =>
     props.isPlaying ? "2px solid black" : "1px solid black"};

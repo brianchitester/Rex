@@ -30,7 +30,7 @@ function AllNfts({ owners }: AllNftsProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -67,7 +67,7 @@ function RecTracks({ ids }: RecTracksProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -134,7 +134,7 @@ function Recs({ recs }: RecsProps) {
   const location = useLocation();
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
@@ -204,7 +204,7 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
   const location = useLocation();
 
   if (loading) {
-    return <h2>Loading Recs</h2>;
+    return <h2>Loading Rex</h2>;
   }
 
   if (error) {
