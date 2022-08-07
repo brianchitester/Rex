@@ -130,8 +130,6 @@ function Recs({ recs }: RecsProps) {
       }
       `;
   const { data, loading, error } = useQuery(ALL_TRACKS_QUERY);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   if (loading) {
     return <h2>Loading Rex</h2>;
