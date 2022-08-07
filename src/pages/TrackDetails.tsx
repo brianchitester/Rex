@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useTrackNftsOwnersQuery, useTrackQuery } from "@spinamp/spinamp-hooks";
+import {
+  fetchTrackById,
+  useTrackNftsOwnersQuery,
+  useTrackQuery,
+} from "@spinamp/spinamp-hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import AllNfts from "../components/Recs";
 import { useNFT as useZoraNFT } from "@zoralabs/nft-hooks";
 import { useCurrentTrack } from "../context/CurrentTrackContext";
+import { getTrackClasisfications } from "../ml/firebase";
+import { Chip, Box } from "@mui/material";
+import { getTrackRecommendations } from "../ml";
+import Track from "../components/lib/Track";
 
 function TrackDetails() {
   const [showMoreOwners, setShowMoreOwners] = useState(false);
@@ -41,6 +49,33 @@ function TrackDetails() {
     }
   }, [track, setCurrentTrack]);
 
+  const [classifications, setClassifications] = useState<any>();
+  const [mlRex, setMlRex] = useState<any>();
+  useEffect(() => {
+    (async () => {
+      const c: any = await getTrackClasisfications(trackId);
+      console.log(c);
+      console.log(
+        Object.keys(c.emotion).sort((a, b) => c.emotion[b] - c.emotion[a])[0]
+      );
+      setClassifications({
+        emotion: Object.keys(c.emotion).sort(
+          (a, b) => c.emotion[b] - c.emotion[a]
+        )[0],
+        genre: Object.keys(c.genre).sort((a, b) => c.genre[b] - c.genre[a])[0],
+        type: Object.keys(c.type).sort((a, b) => c.type[b] - c.type[a])[0],
+      });
+
+      const rex = await getTrackRecommendations(trackId);
+
+      const trackRex = await Promise.all(
+        rex.map(async (r) => await fetchTrackById(r[1]))
+      );
+      console.log(trackRex);
+      setMlRex(trackRex);
+    })();
+  }, [trackId]);
+
   if (isLoading || isOwnerLoading) {
     return <p>Loading!</p>;
   }
@@ -70,6 +105,13 @@ function TrackDetails() {
         {track?.artist.name}
       </TrackArtist>
       <TrackDescription width={imageSize}>
+        {classifications && (
+          <Box>
+            <Chip label={classifications.genre} />
+            <Chip label={classifications.emotion} />
+            <Chip label={classifications.type} />
+          </Box>
+        )}
         {track?.description?.replace(/<[^>]*>?/gm, "")}
       </TrackDescription>
 
@@ -145,6 +187,23 @@ function TrackDetails() {
           No owners,{" "}
           <BuyButton href={track?.websiteUrl}>be the first!</BuyButton>
         </Owners>
+      )}
+
+      {mlRex && (
+        <div>
+          <h3>Content based Rex</h3>
+          <div>
+            {mlRex.map((track: any) => {
+              return (
+                <Track
+                  onClick={() => navigate(`/trackDetails/${track.id}`)}
+                  key={track.id}
+                  track={track}
+                />
+              );
+            })}
+          </div>
+        </div>
       )}
     </StyledTrackDetailsContainer>
   );
