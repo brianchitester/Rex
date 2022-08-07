@@ -1,4 +1,3 @@
-import { ConstructionOutlined } from "@mui/icons-material";
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
