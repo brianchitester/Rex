@@ -67,6 +67,7 @@ export const AudioPlayerProvider = ({ children }: AudioPlayerProviderProps) => {
     setSeek(0);
     audioRef.current.play();
     setPlaying(true);
+    pollAudioData();
   }, [currentTrack]);
 
   const pollAudioData = () => {
