@@ -78,6 +78,12 @@ function TrackDetails() {
         ) : null}
       </TrackTitle>
 
+      {filteredOwners.length > 0 && (
+        <div>
+          <h3>Owner Rex</h3>
+          <AllNfts owners={filteredOwners} />
+        </div>
+      )}
       {filteredOwners.length > 0 ? (
         <Owners>
           <h3>Owners</h3>
@@ -121,7 +127,6 @@ function TrackDetails() {
           <BuyButton href={track?.websiteUrl}>be the first!</BuyButton>
         </Owners>
       )}
-      {filteredOwners.length > 0 && <AllNfts owners={filteredOwners} />}
     </StyledTrackDetailsContainer>
   );
 }
