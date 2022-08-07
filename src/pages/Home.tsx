@@ -155,17 +155,30 @@ const Name = styled.div`
 const SubName = styled.div`
   font-size: 1em;
   color: rgb(50, 50, 50);
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 0.8em;
+  }
 `;
 
 const Photo = styled.img`
   border-radius: 45%;
   width: 10vw;
+
+  @media (max-width: ${tablet}) {
+    width: 20vw;
+  }
 `;
 
 const Photos = styled.div`
   display: flex;
   flex-direction: row;
   gap: 4em;
+  @media (max-width: ${tablet}) {
+    gap: 2em;
+  }
 `;
 const PhotoWithCaption = styled.div`
   display: flex;
