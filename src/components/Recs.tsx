@@ -229,7 +229,7 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
   });
 
   return (
-    <RexContainer>
+    <>
       {normalizedRecs.length > 1 && (
         <RexCol>
           <h3>Owner Rex Normalized</h3>
@@ -241,7 +241,7 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
                   rec.track.id !==
                   location.pathname.replace("/trackDetails/", "")
               )
-              .slice(0, 10)
+              .slice(0, 5)
               .map((rec) => {
                 return (
                   <Track
@@ -265,7 +265,7 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
                   rec.track.id !==
                   location.pathname.replace("/trackDetails/", "")
               )
-              .slice(0, 10)
+              .slice(0, 5)
               .map((rec) => {
                 return (
                   <Track
@@ -278,21 +278,13 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
           </div>
         </RexCol>
       )}
-    </RexContainer>
+    </>
   );
 }
 
-const RexContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-`;
-
 const RexCol = styled.div`
   width: 30vw;
-  min-width: 500px;
+  min-width: 300px;
 `;
 
 export default AllNfts;

@@ -160,12 +160,25 @@ function TrackDetails() {
           </>
         ) : null}
       </TrackTitle>
-
-      {filteredOwners.length > 0 && (
-        <div>
-          <AllNfts owners={filteredOwners} />
-        </div>
-      )}
+      <RexContainer>
+        {mlRex && mlRex.length > 0 && (
+          <RexCol>
+            <h3>Content based Rex</h3>
+            <div>
+              {mlRex.map((track: any) => {
+                return (
+                  <Track
+                    onClick={() => navigate(`/trackDetails/${track.id}`)}
+                    key={track.id}
+                    track={track}
+                  />
+                );
+              })}
+            </div>
+          </RexCol>
+        )}
+        {filteredOwners.length > 0 && <AllNfts owners={filteredOwners} />}
+      </RexContainer>
       {filteredOwners.length > 0 ? (
         <Owners>
           <h3>Owners</h3>
@@ -209,26 +222,22 @@ function TrackDetails() {
           <BuyButton href={track?.websiteUrl}>be the first!</BuyButton>
         </Owners>
       )}
-
-      {mlRex && (
-        <div>
-          <h3>Content based Rex</h3>
-          <div>
-            {mlRex.map((track: any) => {
-              return (
-                <Track
-                  onClick={() => navigate(`/trackDetails/${track.id}`)}
-                  key={track.id}
-                  track={track}
-                />
-              );
-            })}
-          </div>
-        </div>
-      )}
     </StyledTrackDetailsContainer>
   );
 }
+
+const RexContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+`;
+
+const RexCol = styled.div`
+  width: 30vw;
+  min-width: 300px;
+`;
 
 const StyledTrackDetailsContainer = styled.div`
   display: flex;
