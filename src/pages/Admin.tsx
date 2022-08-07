@@ -3,11 +3,20 @@ import { phone, tablet } from "../constants/mediaSize";
 import { runBulkAnalysis } from "../ml";
 import { Button } from "@mui/material";
 
+(window as any)["s"] = 0;
+(window as any)["n"] = 10;
+
 function Admin() {
   return (
     <StyledHomeContainer>
       <Rex>🦖Admin </Rex>
-      <Button onClick={runBulkAnalysis}>Run Bulk Analysis</Button>
+      <Button
+        onClick={() => {
+          runBulkAnalysis((window as any).s, (window as any).n);
+        }}
+      >
+        Run Bulk Analysis
+      </Button>
     </StyledHomeContainer>
   );
 }

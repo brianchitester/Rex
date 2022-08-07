@@ -4,11 +4,11 @@ import { generateTrackClassifications } from "./model"
 const { RateLimit } = require('async-sema');
 const { euclidean } = require('ml-distance-euclidean');
 
-export const runBulkAnalysis = async () => {
+export const runBulkAnalysis = async (s = 0, n = 10) => {
     const tracks = await getAllTrack();
 
     const lim = RateLimit(6); // rps
-    const promises = tracks.items.slice(0, 30).map(async (track, i) => {
+    const promises = tracks.items.slice(s, n).map(async (track, i) => {
         await lim();
         console.log("============== Analyzing " + i + " ===============")
         const prevRes = await getTrackClasisfications(track.id)
