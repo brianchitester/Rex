@@ -145,26 +145,6 @@ function Recs({ recs }: RecsProps) {
     );
   }
 
-  // const recsArr = Object.keys(recs).map((key) => {
-  //   const track =
-  //     data.allProcessedTracks.edges.find((edge: any) => edge.node.id === key) ??
-  //     ({} as ITrack);
-
-  //   const trackWithArtist = {
-  //     ...track.node,
-  //     artist: { name: track.node.artistByArtistId.name ?? "" },
-  //   };
-  //   return {
-  //     track: trackWithArtist,
-  //     count: recs[key],
-  //   };
-  // });
-
-  // // sort for most commonly owned
-  // recsArr.sort((a, b) => {
-  //   return b.count - a.count;
-  // });
-
   return (
     <Final
       processedTracks={data.allProcessedTracks.edges.map(
@@ -252,48 +232,54 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
 
   return (
     <RexContainer>
-      <RexCol>
-        <h3>Owner Rex Normalized</h3>
-        <div>
-          {normalizedRecs
-            .filter(
-              // filter out the current track
-              (rec) =>
-                rec.track.id !== location.pathname.replace("/trackDetails/", "")
-            )
-            .slice(0, 10)
-            .map((rec) => {
-              return (
-                <Track
-                  onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
-                  key={rec.track.id}
-                  track={rec.track} // some info is missing here
-                />
-              );
-            })}
-        </div>
-      </RexCol>
-      <RexCol>
-        <h3>Owner Rex Raw</h3>
-        <div>
-          {recsArr
-            .filter(
-              // filter out the current track
-              (rec) =>
-                rec.track.id !== location.pathname.replace("/trackDetails/", "")
-            )
-            .slice(0, 10)
-            .map((rec) => {
-              return (
-                <Track
-                  onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
-                  key={rec.track.id}
-                  track={rec.track} // some info is missing here
-                />
-              );
-            })}
-        </div>
-      </RexCol>
+      {normalizedRecs.length > 1 && (
+        <RexCol>
+          <h3>Owner Rex Normalized</h3>
+          <div>
+            {normalizedRecs
+              .filter(
+                // filter out the current track
+                (rec) =>
+                  rec.track.id !==
+                  location.pathname.replace("/trackDetails/", "")
+              )
+              .slice(0, 10)
+              .map((rec) => {
+                return (
+                  <Track
+                    onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
+                    key={rec.track.id}
+                    track={rec.track} // some info is missing here
+                  />
+                );
+              })}
+          </div>
+        </RexCol>
+      )}
+      {recsArr.length > 1 && (
+        <RexCol>
+          <h3>Owner Rex Raw</h3>
+          <div>
+            {recsArr
+              .filter(
+                // filter out the current track
+                (rec) =>
+                  rec.track.id !==
+                  location.pathname.replace("/trackDetails/", "")
+              )
+              .slice(0, 10)
+              .map((rec) => {
+                return (
+                  <Track
+                    onClick={() => navigate(`/trackDetails/${rec.track.id}`)}
+                    key={rec.track.id}
+                    track={rec.track} // some info is missing here
+                  />
+                );
+              })}
+          </div>
+        </RexCol>
+      )}
     </RexContainer>
   );
 }
