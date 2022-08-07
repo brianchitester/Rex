@@ -12,7 +12,7 @@ import {
   useAudioPlayerControls,
   useAudioPlayerSeek,
 } from "../context/AudioPlayerContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Seek = () => {
   const { seek, seekTo, duration } = useAudioPlayerSeek();
@@ -116,6 +116,7 @@ export const Player = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentTrack, _] = useCurrentTrack();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // dont render on the homepage (or if not set TODO)
   if (location.pathname === "/" || currentTrack.title === "string") {
@@ -129,21 +130,33 @@ export const Player = () => {
           sx={{
             display: "flex",
             width: "100%",
+            alignItems: "center",
+            gap: "20px",
           }}
         >
           <Box
+            onClick={() => navigate(`/trackDetails/${currentTrack.id}`)}
             sx={{
               margin: 2,
+              marginRight: 0,
             }}
           >
             <CD />
           </Box>
+          <Box onClick={() => navigate(`/trackDetails/${currentTrack.id}`)}>
+            <TrackTitle>{currentTrack?.title}</TrackTitle>
+            <div>{currentTrack?.artist.name}</div>
+          </Box>
+          <Box
+            sx={{
+              width: "20px",
+            }}
+          ></Box>
           <Box
             sx={{
               flexGrow: 1,
             }}
           >
-            {`${currentTrack?.title}-${currentTrack?.artist.name}`}
             <Box
               sx={{
                 display: "flex",
@@ -166,20 +179,35 @@ export const Player = () => {
               <Seek />
             </Box>
           </Box>
+          <Box
+            sx={{
+              width: "40px",
+            }}
+          ></Box>
         </Box>
       </StyledPlayerContainer>
     </AudioPlayerProvider>
   );
 };
 
+const TrackTitle = styled("h2")(
+  ({ theme }) => `
+    margin: 0;
+  `
+);
+
 const StyledPlayerContainer = styled("div")(
   ({ theme }) => `
+  border-top: 1px solid black;
   position: fixed;
   z-index: 1;
   bottom: 0;
   left: 0;
-  height: 150px;
+  height: 132px;
   width: 100%;
+  font-family: permanent-marker, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   background-color: ${theme.palette.background.default};
 `
 );
