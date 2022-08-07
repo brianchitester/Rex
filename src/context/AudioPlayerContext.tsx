@@ -65,6 +65,7 @@ export const AudioPlayerProvider = ({ children }: AudioPlayerProviderProps) => {
     useEffect(() => {
         audioRef.current.src = currentTrack.lossyAudioUrl;
         setSeek(0);
+        audioRef.current.play();
     }, [currentTrack]);
 
     const pollAudioData = () => {
