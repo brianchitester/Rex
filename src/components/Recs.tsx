@@ -172,7 +172,7 @@ function Recs({ recs }: RecsProps) {
           (rec) =>
             rec.track.id !== location.pathname.replace("/trackDetails/", "")
         )
-        .slice(0, 6)
+        .slice(0, 12)
         .map((rec) => {
           return (
             <Track
