@@ -9,17 +9,20 @@ import spinamp from "../img/spinamp.jpg";
 import polygon from "../img/polygon.png";
 import dig from "../img/dig.jpg";
 import tapes from "../img/tapes.jpg";
+import { phone, tablet } from "../constants/mediaSize";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <StyledHomeContainer>
       <Rex>🦖🎵 Rex 🎵🦖</Rex>
-      <div>A whole new way to find music you love on the blockchain.</div>
-      <div>
+      <ProjectInfo>
+        A whole new way to find music you love on the blockchain.
+      </ProjectInfo>
+      <ProjectInfo>
         Get new music recommendations based on what owners and curators are
         collecting.
-      </div>
+      </ProjectInfo>
       <StartButton onClick={() => navigate("/trackList")}>
         start digging
       </StartButton>
@@ -47,8 +50,8 @@ function Home() {
       </Team>
       <BigImg alt="tapes" src={tapes} />
       <Support>
-        <h1>Built for the Metabolism hackathon</h1>
-        <h2>with support from</h2>
+        <SupportH1>Built for the Metabolism hackathon</SupportH1>
+        <SupportH2>with support from</SupportH2>
         <Supporters>
           <a href="https://zora.co/">
             <Supporter alt="zora" src={zora} />
@@ -68,6 +71,25 @@ function Home() {
 const Rex = styled.h1`
   font-size: 8em;
   margin-bottom: 0px;
+  @media (max-width: ${tablet}) {
+    font-size: 4em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 2.5em;
+  }
+`;
+
+const ProjectInfo = styled.div`
+  text-align: center;
+  font-size: 2em;
+
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 0.8em;
+    width: 80%;
+  }
 `;
 
 const BigImg = styled.img`
@@ -82,6 +104,23 @@ const Supporter = styled.img`
   height: auto;
 `;
 
+const SupportH1 = styled.h1`
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 1.5em;
+  }
+`;
+const SupportH2 = styled.h2`
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 1em;
+  }
+`;
+
 const Supporters = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -89,6 +128,14 @@ const Supporters = styled.div`
   align-items: center;
   flex-direction: row;
   margin-bottom: 5em;
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+  }
 `;
 
 const Support = styled.div`
@@ -97,6 +144,12 @@ const Support = styled.div`
 
 const Name = styled.div`
   font-size: 2em;
+  @media (max-width: ${tablet}) {
+    font-size: 1em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 1em;
+  }
 `;
 
 const SubName = styled.div`
@@ -127,6 +180,12 @@ const StartButton = styled.div`
   font-size: 5em;
   margin: 0.5em;
   cursor: pointer;
+  @media (max-width: ${tablet}) {
+    font-size: 4em;
+  }
+  @media (max-width: ${phone}) {
+    font-size: 2.5em;
+  }
 `;
 
 const StyledHomeContainer = styled.div`
