@@ -4,7 +4,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
 import ArtistSearch from "./ArtistSearch";
-import { phone } from "../constants/mediaSize";
+import { phone, tablet } from "../constants/mediaSize";
 
 function Nav() {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const NavItem = styled.div<{ path: string; location: string }>`
   text-decoration: ${(props) =>
     props.location.includes(props.path) ? "underline" : ""};
 
-  @media (max-width: ${phone}) {
+  @media (max-width: ${tablet}) {
     display: none;
   }
 `;
@@ -107,6 +107,9 @@ const StyledNavContainer = styled.div`
   font-weight: 400;
   font-style: normal;
   border-bottom: 1px solid black;
+  @media (max-width: ${phone}) {
+    gap: 1em;
+  }
 `;
 
 export default Nav;

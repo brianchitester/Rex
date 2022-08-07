@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
 import { useAllArtistsQuery } from "@spinamp/spinamp-hooks";
 import styled from "styled-components";
-import { phone } from "../constants/mediaSize";
 
 function ArtistSearch() {
   const navigate = useNavigate();
@@ -59,7 +58,7 @@ function ArtistSearch() {
 }
 
 const ArtistSearchContainer = styled.div`
-  @media (max-width: ${phone}) {
+  @media (max-width: 1200px) {
     display: none;
   }
 `;
