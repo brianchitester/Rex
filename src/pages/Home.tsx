@@ -23,7 +23,7 @@ function Home() {
       <StartButton onClick={() => navigate("/trackList")}>
         start digging
       </StartButton>
-      <img alt="dig" src={dig} />
+      <BigImg alt="dig" src={dig} />
       <Team>
         <h1>Meet The Team</h1>
         <Photos>
@@ -45,7 +45,7 @@ function Home() {
           </PhotoWithCaption>
         </Photos>
       </Team>
-      <img alt="tapes" src={tapes} />
+      <BigImg alt="tapes" src={tapes} />
       <Support>
         <h1>Built for the Metabolism hackathon</h1>
         <h2>with support from</h2>
@@ -68,6 +68,10 @@ function Home() {
 const Rex = styled.h1`
   font-size: 8em;
   margin-bottom: 0px;
+`;
+
+const BigImg = styled.img`
+  max-width: 100vw;
 `;
 
 const Supporter = styled.img`
