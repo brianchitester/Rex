@@ -13,6 +13,8 @@ import {
   useAudioPlayerSeek,
 } from "../context/AudioPlayerContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { addFavorite } from "../ml/firebase";
+import { useAccount } from "wagmi";
 
 const Seek = () => {
   const { seek, seekTo, duration } = useAudioPlayerSeek();
@@ -117,6 +119,9 @@ export const Player = () => {
   const [currentTrack, _] = useCurrentTrack();
   const location = useLocation();
   const navigate = useNavigate();
+  const { address } = useAccount();
+
+  console.log(address);
 
   // dont render on the homepage (or if not set TODO)
   if (location.pathname === "/" || currentTrack.title === "string") {
@@ -171,9 +176,13 @@ export const Player = () => {
               <IconButton>
                 <SkipNextRounded fontSize="medium" />
               </IconButton>
-              <IconButton>
-                <FavoriteRounded fontSize="medium" />
-              </IconButton>
+              {address && (
+                <IconButton
+                  onClick={() => addFavorite(address, currentTrack.id)}
+                >
+                  <FavoriteRounded fontSize="medium" />
+                </IconButton>
+              )}
             </Box>
             <Box>
               <Seek />

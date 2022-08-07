@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, getDocs, collection, arrayUnion, updateDoc } from "firebase/firestore";
 
 const classificationsCollection = "track-classifications-2"
 // Your web app's Firebase configuration
@@ -45,4 +45,27 @@ export const getAllTrackClasisfications = async () => {
     });
 
     return featureVecs;
+}
+
+export const addFavorite = async (ownerId: string, trackId: string) => {
+    const currFavs = getFavorites(ownerId)
+    if (!currFavs) {
+        await setDoc(doc(db, "favorites", encodeURIComponent(ownerId)), { trackId: [trackId] });
+    } else {
+        await updateDoc(doc(db, "favorites", encodeURIComponent(ownerId)), { trackId: arrayUnion(trackId) });
+    }
+
+}
+
+export const getFavorites = async (ownerId: string) => {
+    const docRef = doc(db, "favorites", encodeURIComponent(ownerId));
+    const docSnap = await getDoc(docRef);
+
+    console.log(docSnap.data())
+
+    if (!docSnap.data()) {
+        return []
+    } else {
+        return docSnap.data()?.trackId;
+    }
 }

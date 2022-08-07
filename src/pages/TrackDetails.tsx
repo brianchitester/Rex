@@ -11,7 +11,7 @@ import AllNfts from "../components/Recs";
 import { useNFT as useZoraNFT } from "@zoralabs/nft-hooks";
 import { useCurrentTrack } from "../context/CurrentTrackContext";
 import { getTrackClasisfications } from "../ml/firebase";
-import { Chip, Box } from "@mui/material";
+import { Chip, Box, Button } from "@mui/material";
 import { getTrackRecommendations } from "../ml";
 import Track from "../components/lib/Track";
 
@@ -106,17 +106,38 @@ function TrackDetails() {
       </TrackArtist>
       <TrackDescription width={imageSize}>
         {classifications && (
-          <Box>
-            <Chip label={classifications.genre} />
-            <Chip label={classifications.emotion} />
-            <Chip label={classifications.type} />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Chip
+              color="primary"
+              variant="outlined"
+              label={classifications.genre}
+              sx={{ margin: 0.5 }}
+            />
+            <Chip
+              color="primary"
+              variant="outlined"
+              label={classifications.emotion}
+              sx={{ margin: 0.5 }}
+            />
+            <Chip
+              color="primary"
+              variant="outlined"
+              label={classifications.type}
+              sx={{ margin: 0.5 }}
+            />
           </Box>
         )}
         {track?.description?.replace(/<[^>]*>?/gm, "")}
       </TrackDescription>
 
       {track?.websiteUrl && track?.platformId && (
-        <a href={track?.websiteUrl}>
+        <Button variant="contained" href={track?.websiteUrl}>
           view on{" "}
           {track.platformId
             .replace(
@@ -127,7 +148,7 @@ function TrackDetails() {
               "0x719C6d392fc659f4fe9b0576cBC46E18939687a7",
               "danielallan.xyz"
             )}
-        </a>
+        </Button>
       )}
 
       <TrackTitle>
@@ -218,7 +239,9 @@ const StyledTrackDetailsContainer = styled.div`
 `;
 
 const StyledTrackCover = styled.img`
-  padding: 20px;
+  margin: 30px;
+  margin-top: 50px;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const BuyButton = styled.a`
