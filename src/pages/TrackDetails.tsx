@@ -69,10 +69,6 @@ function TrackDetails() {
                 {track?.description?.replace(/<[^>]*>?/gm, "")}
             </TrackDescription>
 
-            <audio controls src={track?.lossyAudioUrl}>
-                Your browser does not support the
-                <code>audio</code> element.
-            </audio>
             {track?.websiteUrl && track?.platformId && (
                 <a href={track?.websiteUrl}>view on {track.platformId}</a>
             )}
@@ -143,7 +139,8 @@ const StyledTrackDetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 200px;
+    padding-bottom: 200px;
+    background-color: cornsilk;
 `;
 
 const StyledTrackCover = styled.img`
