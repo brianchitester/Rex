@@ -107,6 +107,7 @@ function TrackDetails() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              marginBottom: "8px",
             }}
           >
             <Chip
@@ -227,6 +228,11 @@ const RexContainer = styled.div`
 const RexCol = styled.div`
   width: 30vw;
   min-width: 300px;
+  > h3 {
+    font-weight: 200;
+    font-size: 1.8em;
+    font-family: permanent-marker, sans-serif;
+  }
 `;
 
 const StyledTrackDetailsContainer = styled.div`
@@ -270,12 +276,20 @@ const TrackDescription = styled.div<{ width: number }>`
 
 const Owners = styled.div`
   margin-top: 1em;
+  > h3 {
+    font-weight: 200;
+    font-size: 1.8em;
+    font-family: permanent-marker, sans-serif;
+  }
 `;
 
 const OwnerLink = styled.div`
   cursor: pointer;
   text-overflow: ellipsis;
   margin: 0.5em 0em;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TrackPrice = styled.span`

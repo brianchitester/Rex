@@ -30,7 +30,11 @@ function AllNfts({ owners }: AllNftsProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Rex</h2>;
+    return (
+      <RexCol>
+        <h3>Loading Rex</h3>
+      </RexCol>
+    );
   }
 
   if (error) {
@@ -67,7 +71,11 @@ function RecTracks({ ids }: RecTracksProps) {
   const { data, loading, error } = useQuery(ALL_NFTS_QUERY);
 
   if (loading) {
-    return <h2>Loading Rex</h2>;
+    return (
+      <RexCol>
+        <h3>Loading Rex</h3>
+      </RexCol>
+    );
   }
 
   if (error) {
@@ -132,7 +140,11 @@ function Recs({ recs }: RecsProps) {
   const { data, loading, error } = useQuery(ALL_TRACKS_QUERY);
 
   if (loading) {
-    return <h2>Loading Rex</h2>;
+    return (
+      <RexCol>
+        <h3>Loading Rex</h3>
+      </RexCol>
+    );
   }
 
   if (error) {
@@ -182,7 +194,11 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
   const location = useLocation();
 
   if (loading) {
-    return <h2>Loading Rex</h2>;
+    return (
+      <RexCol>
+        <h3>Loading Rex</h3>
+      </RexCol>
+    );
   }
 
   if (error) {
@@ -285,6 +301,11 @@ function Final({ processedTracks, recsCounts }: FinalProps) {
 const RexCol = styled.div`
   width: 30vw;
   min-width: 300px;
+  > h3 {
+    font-weight: 200;
+    font-size: 1.8em;
+    font-family: permanent-marker, sans-serif;
+  }
 `;
 
 export default AllNfts;
