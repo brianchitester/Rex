@@ -44,8 +44,8 @@ const StyledTrackInfo = styled.div`
   display: flex;
   cursor: pointer;
   gap: 10px;
-  padding: 5px;
-  background-color: rgba(255, 255, 255, 0.6);
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.7);
   font-weight: bold;
   border-radius: 5px;
   font-family: permanent-marker, sans-serif;
@@ -67,7 +67,7 @@ const StyledTrackContainer = styled.div<{
     props.isPlaying ? "2px solid black" : "1px solid black"};
   gap: 10px;
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 10px;
   align-items: center;
   transition: transform 0.2s;
