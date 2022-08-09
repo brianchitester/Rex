@@ -54,10 +54,6 @@ function TrackDetails() {
   useEffect(() => {
     (async () => {
       const c: any = await getTrackClasisfications(trackId);
-      console.log(c);
-      console.log(
-        Object.keys(c.emotion).sort((a, b) => c.emotion[b] - c.emotion[a])[0]
-      );
       setClassifications({
         emotion: Object.keys(c.emotion).sort(
           (a, b) => c.emotion[b] - c.emotion[a]
@@ -123,12 +119,6 @@ function TrackDetails() {
               color="primary"
               variant="outlined"
               label={classifications.emotion}
-              sx={{ margin: 0.5 }}
-            />
-            <Chip
-              color="primary"
-              variant="outlined"
-              label={classifications.type}
               sx={{ margin: 0.5 }}
             />
           </Box>
@@ -291,7 +281,7 @@ const OwnerLink = styled.div`
 const TrackPrice = styled.span`
   margin-top: 1em;
   font-weight: 200;
-  font-size: 0.5em;
+  font-size: 0.7em;
   font-family: permanent-marker, sans-serif;
 `;
 
