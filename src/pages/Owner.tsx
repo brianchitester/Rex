@@ -80,6 +80,7 @@ const StyledOwnerContainer = styled.div`
   font-family: permanent-marker, sans-serif;
   font-weight: 400;
   font-style: normal;
+  margin-bottom: 150px;
 `;
 
 const OwnerTitle = styled.h1`
