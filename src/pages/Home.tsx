@@ -134,14 +134,6 @@ const SupportH1 = styled.h1`
     font-size: 1.5em;
   }
 `;
-const SupportH2 = styled.h2`
-  @media (max-width: ${tablet}) {
-    font-size: 1em;
-  }
-  @media (max-width: ${phone}) {
-    font-size: 1em;
-  }
-`;
 
 const Supporters = styled.div`
   display: flex;
