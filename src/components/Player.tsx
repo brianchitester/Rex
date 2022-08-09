@@ -84,17 +84,7 @@ const CD = () => {
   console.log("seek1000", (seek * 1000) % 360);
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        borderRadius: "50%",
-        overflow: "hidden",
-        height: 100,
-        width: 100,
-        transform: `rotate(${(seek * 20) % 360}deg)`,
-        animation: playing ? "rotate 10s linear infinite" : "none",
-      }}
-    >
+    <StyledRecord seek={seek} playing={playing}>
       <img
         alt="cover"
         src={currentTrack?.lossyArtworkUrl}
@@ -116,7 +106,7 @@ const CD = () => {
           zIndex: 1,
         }}
       ></Box>
-    </Box>
+    </StyledRecord>
   );
 };
 
@@ -184,13 +174,9 @@ export const Player = () => {
           </Box>
           <Box onClick={() => navigate(`/trackDetails/${currentTrack.id}`)}>
             <TrackTitle>{currentTrack?.title}</TrackTitle>
-            <div>{currentTrack?.artist.name}</div>
+            <TrackArtist>{currentTrack?.artist.name}</TrackArtist>
           </Box>
-          <Box
-            sx={{
-              width: "20px",
-            }}
-          ></Box>
+          <SmallSpacerBox />
           <Box
             sx={{
               flexGrow: 1,
@@ -245,20 +231,63 @@ export const Player = () => {
               <Seek />
             </Box>
           </Box>
-          <Box
-            sx={{
-              width: "40px",
-            }}
-          ></Box>
+          <MedSpacerBox />
         </Box>
       </StyledPlayerContainer>
     </AudioPlayerProvider>
   );
 };
 
+const SmallSpacerBox = styled(Box)(
+  ({ theme }) => `
+width: 20px;
+  @media (max-width: ${phone}) {
+    display: none;
+}
+`
+);
+
+const MedSpacerBox = styled(Box)(
+  ({ theme }) => `
+width: 40px;
+  @media (max-width: ${phone}) {
+    width: 10px;
+
+}
+`
+);
+
+const StyledRecord = styled(Box)(
+  ({ theme, seek, playing }) => `
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 100px;
+  width: 100px;
+  transform: rotate(${(seek * 20) % 360}deg);
+  animation: ${playing ? "rotate 10s linear infinite" : "none"};
+  @media (max-width: ${phone}) {
+    font-size: 1em;
+    width: 50px;
+    height: 50px;
+}
+`
+);
+
 const TrackTitle = styled("h2")(
   ({ theme }) => `
     margin: 0;
+    @media (max-width: ${phone}) {
+      font-size: 0.8em;
+  }
+  `
+);
+
+const TrackArtist = styled("div")(
+  ({ theme }) => `
+    @media (max-width: ${phone}) {
+      font-size: 0.7em;
+  }
   `
 );
 
@@ -297,5 +326,9 @@ const StyledPlayerContainer = styled("div")(
   font-weight: 400;
   font-style: normal;
   background-color: ${theme.palette.background.default};
+  @media (max-width: ${phone}) {
+    font-family: sans-serif;
+    height: 100px;
+}
 `
 );
