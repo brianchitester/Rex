@@ -4,10 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Track from "../components/lib/Track";
 import { getFavorites } from "../ml/firebase";
+import { useAccount } from "wagmi";
 
 function Owner() {
   const params = useParams();
   const navigate = useNavigate();
+  const { address } = useAccount();
   const { collection, isLoading, isError } = useCollectionQuery(
     params?.ownerId ?? ""
   );
@@ -40,7 +42,11 @@ function Owner() {
 
   return (
     <StyledOwnerContainer>
-      <OwnerTitle>{`${params?.ownerId?.slice(0, 6)}'s collection`}</OwnerTitle>
+      <OwnerTitle>
+        {address === params?.ownerId
+          ? "My Music"
+          : `${params?.ownerId?.slice(0, 6)}'s collection`}
+      </OwnerTitle>
       {collection.map((track) => {
         return (
           <Track
@@ -50,9 +56,9 @@ function Owner() {
           />
         );
       })}
-      {favorites && (
+      {address === params?.ownerId && favorites && (
         <>
-          <h2>Favorites</h2>
+          <OwnerTitle>My Favorites</OwnerTitle>
           {favorites.map((track: any) => {
             return (
               <Track
