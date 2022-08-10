@@ -17,7 +17,7 @@ function TrackList() {
   let [offsetTop, setOffsetTop] = useState(0);
 
   const handleScroll = (e: any) => {
-    let midPoint = e.target.offsetHeight / 2;
+    let midPoint = e.target.offsetHeight / 3.2;
     setSelectedIndex(Math.floor((midPoint + e.target.scrollTop) / 50) - 1);
   };
 
