@@ -1,5 +1,4 @@
 import React from "react";
-import { useAllTracksQuery } from "@spinamp/spinamp-hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Track from "../components/lib/Track";
@@ -54,8 +53,6 @@ function Artist() {
       </div>
     );
   }
-
-  console.log(data);
 
   const processedData =
     data?.allArtists?.edges[0]?.node?.processedTracksByArtistId?.nodes?.map(
