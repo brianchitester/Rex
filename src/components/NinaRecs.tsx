@@ -85,53 +85,6 @@ type NinaRecsProps = {
 function NinaRecs({ trackId }: NinaRecsProps) {
   const [owners, setOwners] = useState<string[]>();
   const [ninaRecs, setNinaRecs] = useState<string[]>();
-  const fetchOwners = async (trackId: string) => {
-    const resp = await fetch(
-      `https://api.ninaprotocol.com/v1/releases/${trackId}/collectors`
-    );
-    const owners = await resp.json();
-    if (!owners?.collectors) {
-      console.error("something broke");
-      return;
-    }
-    setOwners(owners?.collectors.map((collector: any) => collector.publicKey));
-    const ownerCollections = await Promise.all(
-      // hack, limit collectors to try to minimize rate limiting
-      owners?.collectors.slice(0, 50).map((collector: any) => {
-        return fetchOwnersTracks(collector.publicKey);
-      })
-    );
-    const flowOwnerCollections = ownerCollections.flat();
-
-    const recsCounts = flowOwnerCollections.reduce(
-      (accum: { [key: string]: number }, edge: any) => {
-        if (!edge.mint) {
-          console.log("no mint");
-          console.log(edge);
-        } else if (!accum[edge.mint]) {
-          accum[edge.mint] = 1;
-        } else {
-          accum[edge.mint] = accum[edge.mint] + 1;
-        }
-        return accum;
-      },
-      {}
-    );
-
-    const recsArr = Object.keys(recsCounts).map((key) => {
-      return {
-        trackId: `solana/${key}`,
-        count: recsCounts[key],
-      };
-    });
-
-    recsArr.sort((a, b) => {
-      return b.count - a.count;
-    });
-
-    console.log(recsArr);
-    setNinaRecs(recsArr.slice(1, 8).map((rec) => rec.trackId));
-  };
 
   const fetchOwnersTracks = async (ownerId: string) => {
     const resp = await fetch(
@@ -146,8 +99,56 @@ function NinaRecs({ trackId }: NinaRecsProps) {
   };
 
   useEffect(() => {
+    const fetchOwners = async (ninaTrackId: string) => {
+      const resp = await fetch(
+        `https://api.ninaprotocol.com/v1/releases/${ninaTrackId}/collectors`
+      );
+      const owners = await resp.json();
+      if (!owners?.collectors) {
+        console.error("something broke");
+        return;
+      }
+      setOwners(
+        owners?.collectors.map((collector: any) => collector.publicKey)
+      );
+      const ownerCollections = await Promise.all(
+        // hack, limit collectors to try to minimize rate limiting
+        owners?.collectors.slice(0, 50).map((collector: any) => {
+          return fetchOwnersTracks(collector.publicKey);
+        })
+      );
+      const flowOwnerCollections = ownerCollections.flat();
+
+      const recsCounts = flowOwnerCollections.reduce(
+        (accum: { [key: string]: number }, edge: any) => {
+          if (!edge.mint) {
+            console.log("no mint");
+            console.log(edge);
+          } else if (!accum[edge.mint]) {
+            accum[edge.mint] = 1;
+          } else {
+            accum[edge.mint] = accum[edge.mint] + 1;
+          }
+          return accum;
+        },
+        {}
+      );
+
+      const recsArr = Object.keys(recsCounts).map((key) => {
+        return {
+          trackId: `solana/${key}`,
+          count: recsCounts[key],
+        };
+      });
+
+      recsArr.sort((a, b) => {
+        return b.count - a.count;
+      });
+
+      setNinaRecs(recsArr.slice(1, 8).map((rec) => rec.trackId));
+    };
     fetchOwners(trackId);
-  }, [trackId, fetchOwners]);
+  }, [trackId]);
 
   return (
     <RexCol>
