@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Track from "./lib/Track";
 import { gql, useQuery } from "@apollo/client";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type NinaTracksProps = {
   trackIds: string[];
@@ -39,7 +39,6 @@ function NinaTracks({ trackIds }: NinaTracksProps) {
 
   const { data, loading, error } = useQuery(ALL_TRACKS_QUERY);
   const navigate = useNavigate();
-  const location = useLocation();
 
   if (loading) {
     return (
@@ -148,7 +147,7 @@ function NinaRecs({ trackId }: NinaRecsProps) {
 
   useEffect(() => {
     fetchOwners(trackId);
-  }, [trackId]);
+  }, [trackId, fetchOwners]);
 
   return (
     <RexCol>
