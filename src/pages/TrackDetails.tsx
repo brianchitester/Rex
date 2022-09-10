@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   fetchTrackById,
   useTrackNftsOwnersQuery,
@@ -14,6 +14,7 @@ import { getTrackClasisfications } from "../ml/firebase";
 import { Chip, Box, Button } from "@mui/material";
 import { getTrackRecommendations } from "../ml";
 import Track from "../components/lib/Track";
+import NinaRecs from "../components/NinaRecs";
 
 function TrackDetails() {
   const [showMoreOwners, setShowMoreOwners] = useState(false);
@@ -33,6 +34,18 @@ function TrackDetails() {
     isLoading: isOwnerLoading,
     isError: isOwnerError,
   } = useTrackNftsOwnersQuery(trackId ?? "");
+
+  const ninaId = useMemo(() => {
+    if (
+      track?.websiteUrl?.includes("https://ninaprotocol.com/") ||
+      track?.websiteUrl?.includes("https://nina.market/")
+    ) {
+      return track?.websiteUrl
+        ?.replace("https://ninaprotocol.com/", "")
+        .replace("https://nina.market/", "");
+    }
+    return "";
+  }, [track?.websiteUrl]);
 
   const { data: zoraData } = useZoraNFT(params?.token, params.id);
 
@@ -205,8 +218,10 @@ function TrackDetails() {
             </>
           )}
         </Owners>
-      ) : track?.platformId === "nina" ? (
-        <Owners>{track.platformId} support coming soon!</Owners>
+      ) : track?.platformId === "nina" && ninaId ? (
+        <Owners>
+          <NinaRecs trackId={ninaId} />
+        </Owners>
       ) : (
         <Owners>
           No owners,{" "}

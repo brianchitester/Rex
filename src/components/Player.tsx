@@ -79,10 +79,6 @@ const CD = () => {
 
   const theme = useTheme();
 
-  console.log("seek", seek);
-  console.log("seek2", seek % 360);
-  console.log("seek1000", (seek * 1000) % 360);
-
   return (
     <StyledRecord seek={seek} playing={playing}>
       <img
@@ -164,7 +160,7 @@ export const Player = () => {
           }}
         >
           <Box
-            onClick={() => navigate(`/trackDetails/${currentTrack.id}`)}
+            onClick={() => navigate(`/trackDetails/${currentTrack?.id}`)}
             sx={{
               margin: 2,
               marginRight: 0,
@@ -172,9 +168,9 @@ export const Player = () => {
           >
             <CD />
           </Box>
-          <Box onClick={() => navigate(`/trackDetails/${currentTrack.id}`)}>
+          <Box onClick={() => navigate(`/trackDetails/${currentTrack?.id}`)}>
             <TrackTitle>{currentTrack?.title}</TrackTitle>
-            <TrackArtist>{currentTrack?.artist.name}</TrackArtist>
+            <TrackArtist>{currentTrack?.artist?.name}</TrackArtist>
           </Box>
           <SmallSpacerBox />
           <Box
