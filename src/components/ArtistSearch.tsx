@@ -24,9 +24,7 @@ function ArtistSearch() {
   const artistOptions = uniqueArtistNames.map((artistName) => {
     return {
       label: artistName,
-      id: artists.find(
-        (artist) => artist.name === artistName && artist.id.includes("/")
-      )?.id,
+      id: artists.find((artist) => artist.name === artistName)?.id,
     };
   });
 
