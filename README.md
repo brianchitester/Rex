@@ -107,7 +107,7 @@ The app runs at `http://localhost:3000` via `react-app-rewired` (see `config-ove
 
 ## Status
 
-Built in ~5 weeks during the [Zora Metabolism Hackathon](https://www.zora.co/) (Aug–Sep 2022). Won the hackathon. Not actively maintained — kept here as a portfolio artifact and a snapshot of what was possible at the intersection of web3 music + in-browser ML in 2022.
+Built during the [Zora Metabolism Hackathon](https://www.zora.co/) (Aug 4–10, 2022). Won the hackathon. Not actively maintained — kept here as a portfolio artifact and a snapshot of what was possible at the intersection of web3 music + in-browser ML in 2022.
 
 The tipping contract was a work in progress at the deadline (`Tipping-wip.sol`) — supports ERC20 payments via a UUPS-upgradeable proxy with configurable commission, but was not deployed to mainnet.
 
